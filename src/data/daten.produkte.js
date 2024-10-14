@@ -72,7 +72,7 @@ export const produkte = [
     kategorie: "Pasta",
     preis: 8.99,
     beschreibung:
-      "Massa feita de farinha de trigo e ovos, servida com molhos simples ou elaborados como, manteiga e parmesão, frango ao creme ou camarão alho e oleo",
+      "Nudeln aus Weizenmehl und Eiern, serviert mit einfachen oder raffinierten Saucen wie Butter und Parmesan, Hähnchen- oder Garnelencreme, Knoblauch und Öl",
     bild: gnocchi,
   },
   {
@@ -81,7 +81,7 @@ export const produkte = [
     kategorie: "Vorspeise",
     preis: 9.2,
     beschreibung:
-      "Prato original da Itália, que leva fatias de pão italiano torrado, tomate picado, alho, manjericão e azeite",
+      "Originalgericht aus Italien, zubereitet aus gerösteten italienischen Brotscheiben, gehackten Tomaten, Knoblauch, Basilikum und Olivenöl",
     bild: bruschetta,
   },
   {
@@ -90,7 +90,7 @@ export const produkte = [
     kategorie: "Vorspeise",
     preis: 32.0,
     beschreibung:
-      "Prato de origem francesa, que leva fatias finas de salmão cru, alcaparras, queijo parmesão ralado e molho mostarda",
+      "Gericht französischen Ursprungs, das dünne Scheiben rohen Lachs, Kapern, geriebenen Parmesan und Senfsauce enthält",
     bild: carpaccio,
   },
   {
@@ -99,7 +99,7 @@ export const produkte = [
     kategorie: "Vorspeise",
     preis: 65.0,
     beschreibung:
-      "Um prato tipico do leste da Espanha, que leva arroz e frutos do mar como mariscos, polvo, camarões, mexilhões e lulas",
+      "Ein typisches Gericht aus Ostspanien, das Reis und Meeresfrüchte wie Schalentiere, Tintenfisch, Garnelen, Muscheln und Tintenfisch umfasst",
     bild: paella,
   },
   {
@@ -108,7 +108,7 @@ export const produkte = [
     kategorie: "Vorspeise",
     preis: 62.0,
     beschreibung:
-      "Prato tipico do Japão, que leva camarões empanados em massa tempurá, maionese e molho picante",
+      "Typisches Gericht aus Japan mit in Tempurateig panierten Garnelen, Mayonnaise und scharfer Sauce",
     bild: ebiScharf,
   },
   {
@@ -117,34 +117,34 @@ export const produkte = [
     kategorie: "Vorspeise",
     preis: 18.99,
     beschreibung:
-      "Um irrestivel purê de batata francês com queijo gruyere e meia cura",
+      "Ein unwiderstehliches französisches Kartoffelpüree mit Gruyere-Käse und Halbpüree",
     bild: aligot,
   },
   {
     id: 11,
-    name: "Filé Mignon",
+    name: "Filet Mignon",
     kategorie: "Fleisch",
     preis: 41.99,
     beschreibung:
-      "Com pouca gordura e fibras, além de muito macia, essa carne vai bem com diversos tipos de molhos",
+      "Dieses Fleisch ist fett- und ballaststoffarm, sehr zart und passt gut zu verschiedenen Saucen.",
     bild: fileMignon,
   },
   {
     id: 12,
-    name: "Picanha",
+    name: "Brasilianisch Tafelpitz",
     kategorie: "Fleisch",
     preis: 35.99,
     beschreibung:
-      "Uma execelente carne que tem uma capa de gordura e fibras generosas que acentuam o sabor e a maciez do corte",
+      "Ein ausgezeichnetes Fleisch mit einer Fettschicht und großzügigen Fasern, die den Geschmack und die Zartheit des Stücks verstärken",
     bild: tafelSpitz,
   },
   {
     id: 13,
-    name: "Bife Ancho",
+    name: "Ancho Fleisch",
     kategorie: "Fleisch",
     preis: 39.99,
     beschreibung:
-      "Uma carne que tem um ótimo nível de marmoreio e um sabor delicado, podendendo ser feita tanto na grelha ou na frigideira",
+      "Ein Fleisch mit hervorragender Marmorierung und feinem Geschmack, das sowohl auf dem Grill als auch in der Pfanne gegart werden kann",
     bild: bifeAncho,
   },
   {
@@ -153,7 +153,7 @@ export const produkte = [
     kategorie: "Fleisch",
     preis: 159.99,
     beschreibung:
-      "É uma carne que combina duas texturas e sabores diferentes em uma só peça, e pode ser feita na grelha ou no forno",
+      "Dieses Fleisch kombiniert zwei verschiedene Texturen und Geschmacksrichtungen in einem Stück und kann auf dem Grill oder im Ofen zubereitet werden",
     bild: tomahwankSteak,
   },
   {
@@ -162,7 +162,7 @@ export const produkte = [
     kategorie: "Fleisch",
     preis: 59.99,
     beschreibung:
-      "Parte dianteira da costela bovina, muito suculenta e saborosa, que pode ser feita na grelha ou no forno",
+      "Vorderteil der Rinderbrust, sehr saftig und geschmackvoll, kann auf dem Grill oder im Ofen zubereitet werden",
     bild: primeRib,
   },
   {
@@ -171,7 +171,7 @@ export const produkte = [
     kategorie: "Naschspeisen",
     preis: 15.99,
     beschreibung:
-      "Sobremesa italiana que leva pão de ló, café, queijo mascarpone, ovos, açucar e cacau em pó",
+      "Italienisches Dessert, das Biskuitkuchen, Kaffee, Mascarpone-Käse, Eier, Zucker und Kakaopulver enthält",
     bild: tiramisu,
   },
   {
@@ -180,7 +180,7 @@ export const produkte = [
     kategorie: "Naschspeisen",
     preis: 8.99,
     beschreibung:
-      "Típica sobremesa dos Estados Unidos, que leva bolo, cream cheese e calda de frutas",
+      "Typisches Dessert aus den Vereinigten Staaten, das Kuchen, Frischkäse und Fruchtsirup enthält",
     bild: cheesecake,
   },
   {
@@ -189,52 +189,52 @@ export const produkte = [
     kategorie: "Naschspeisen",
     preis: 9.99,
     beschreibung:
-      "Uma sobremesa inglesa, feita a base de biscoito triturado com manteiga, uma camada de doce de leite, banana fatiada e chantilly",
+      "Ein englisches Dessert, hergestellt aus zerbröseltem Butterkeks, einer Schicht aus Dulce de Leche, geschnittenen Bananen und Schlagsahne",
     bild: banoffee,
   },
   {
     id: 19,
-    name: "Mil-folhas",
+    name: "Mille-Feuille",
     kategorie: "Naschspeisen",
     preis: 9.99,
     beschreibung:
-      "Sobremesa de origem francesa, feita com massa folhada crocante e recheio cremoso de baunilha, chocolate ou frutas e açucar de confeiteiro",
+      "Französisches Dessert, hergestellt mit knusprigem Blätterteig und einer cremigen Füllung aus Vanille, Schokolade oder Früchten und Puderzucker",
     bild: milFolhas,
   },
   {
     id: 20,
-    name: "Pudim",
+    name: "Pudding",
     kategorie: "Naschspeisen",
     preis: 5.99,
     beschreibung:
-      "Sobremesa cremosa e gelada muito popular no Brasil, feita com leite condesado, leite e ovos",
+      "Ein sehr beliebtes, cremiges und kaltes Dessert aus Brasilien, hergestellt aus Kondensmilch, Milch und Eiern",
     bild: pudding,
   },
   {
     id: 21,
-    name: "Cerveja Artesanal",
+    name: "Craft Bier",
     kategorie: "Getränken",
     preis: 12.99,
     beschreibung:
-      "Cerveja artesanal de produção alemã que leva ingredientes nobres como malte, lúpulu, água e levedura ",
+      "Handwerklich gebrautes Bier aus Deutschland, das edle Zutaten wie Malz, Hopfen, Wasser und Hefe enthält",
     bild: bier,
   },
   {
     id: 22,
-    name: "Refrigerante",
+    name: "Getränke",
     kategorie: "Getränken",
     preis: 7.99,
     beschreibung:
-      "Um refrescante refrigerante de cola com pequenos pedaços de limão e raspas de hortelã",
+      "Ein erfrischendes Cola-Getränk mit kleinen Zitronenstücken und Minzraspeln",
     bild: kuhlschrank,
   },
   {
     id: 23,
-    name: "Suco",
+    name: "Saft",
     kategorie: "Getränken",
     preis: 6.99,
     beschreibung:
-      "Mais puro suco de laranjas holandesas frescas e levemente adocicada",
+      "Der reinste Saft aus frischen holländischen Orangen, leicht gesüßt",
     bild: saft,
   },
   {
@@ -243,60 +243,60 @@ export const produkte = [
     kategorie: "Getränken",
     preis: 17.99,
     beschreibung:
-      "Um poderoso whiskey sabor bourbon, envelhecido em barris de carvalho branco carbonizado",
+      "Ein kräftiger Bourbon-Whiskey, gereift in verkohlten Fässern aus weißer Eiche",
     bild: whiskey,
   },
   {
     id: 25,
-    name: "Água",
+    name: "Wasser",
     kategorie: "Getränken",
     preis: 4.99,
-    beschreibung: "Água mineral saborizada com limão siciliano",
+    beschreibung: "Mit sizilianischer Zitrone aromatisiertes Mineralwasser",
     bild: wasser,
   },
   {
     id: 26,
-    name: "Salada Ceasar",
+    name: "KaiserSalat",
     kategorie: "Salat",
     preis: 19.8,
     beschreibung:
-      "Salada preparada com alface-romana, torrada, queijo parmesão e molho Ceasar",
+      "Salat zubereitet mit Römersalat, Croutons, Parmesan und Ceasar-Dressing",
     bild: kaiserSalat,
   },
   {
     id: 27,
-    name: "Salada Caprese",
+    name: "CapreseSalat",
     kategorie: "Salat",
     preis: 22.0,
     beschreibung:
-      "Uma salada italiana, feita com mussarela fresca, tomate e manjericão, temperada com sal e azeite",
+      "Ein italienischer Salat, zubereitet mit frischem Mozzarella, Tomaten und Basilikum, gewürzt mit Salz und Olivenöl",
     bild: CapreseSalat,
   },
   {
     id: 28,
-    name: "Salada Waldorf",
+    name: "Waldorf Salat",
     kategorie: "Salat",
     preis: 40.0,
     beschreibung:
-      "Criada em 1893 no Waldorf Hotel, essa salada leva uma fatia de maça e aipo, nozes cortadas, maionese",
+      "1893 im Waldorf Hotel kreiert, enthält dieser Salat Apfelscheiben und Sellerie, gehackte Walnüsse und Mayonnaise",
     bild: WaldorfSalat,
   },
   {
     id: 29,
-    name: "Salada Grega",
+    name: "Griechischer Salat",
     kategorie: "Salat",
     preis: 13.99,
     beschreibung:
-      "Versão original da salada que leva tomate, pepino, pimentão, cebola roxa, pimenta-do-reino, orégano, azeite e queijo feta",
+      "Die Originalversion des Salats, bestehend aus Tomaten, Gurken, Paprika, roten Zwiebeln, Pfeffer, Oregano, Olivenöl und Feta-Käse",
     bild: grieschischerSalat,
   },
   {
     id: 30,
-    name: "Salada Niçoise",
+    name: "Niçoise Salat",
     kategorie: "Salat",
     preis: 22.99,
     beschreibung:
-      "Salada tradicional da cidade de Nice, feita com tomate, ovos cozidos, azeitona niçoise, azeite e atum",
+      "Traditioneller Salat aus der Stadt Nizza, zubereitet mit Tomaten, gekochten Eiern, Niçoise-Oliven, Olivenöl und Thunfisch",
     bild: NicoiseSalat,
   },
 ];

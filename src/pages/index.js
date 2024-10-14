@@ -22,13 +22,13 @@ export default function Home() {
 
   const griffSucht = (textGetippt) => {
     setTextSuchtGetippt(textGetippt);
-    textGetippt.length >= 3 && setgefiltertDaten(SuchtLeiste(textGetippt));
+    textGetippt.length >= 3 && setgefiltertDaten(suchtProdukt(textGetippt));
     setKnopfGetippt("");
   };
 
   const griffFilter = (kategorie) => {
     setTextSuchtGetippt("");
-    setgefiltertDaten(filterDaten(kategorie));
+    setgefiltertDaten(filterProdukte(kategorie));
     setKnopfGetippt(kategorie);
   };
 
