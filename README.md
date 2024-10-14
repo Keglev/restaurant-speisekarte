@@ -1,4 +1,4 @@
-##About
+## About
 
 A Restaurant menu made with React and Next.js.
 
