@@ -43,7 +43,7 @@ This small application offers a little bit more: the user can search the menu fo
 
 <img src="./src/assets/imgs/salatspeisekarte.png" alt="Screenshot 1" width="600" height="300"/>
 
-<img src="./src/assets/imgs/fleischspeisekarte.png" alt="Screenshot 1" width="600" height="300"/>
+<img src="./src/assets/imgs/fleischspeiserkarte.png" alt="Screenshot 1" width="600" height="300"/>
 
 # example with "Nudeln":
 
