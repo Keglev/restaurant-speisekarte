@@ -34,7 +34,7 @@ This small application offers a little bit more: the user can search the menu fo
  The user can use a search bar to find items in the menu. The menu automatically loads the items with the pictures and price when the user still writing on it.
  📱 The page loads fast, so make the app more user-friendly.
 
- # Scrennshots
+ # Screenshots
 
  # Initial screen
 <img src="./src/assets/imgs/project-image.png" alt="Screenshot 1" width="600" height="300"/>
