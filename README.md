@@ -39,6 +39,17 @@ This small application offers a little bit more: the user can search the menu fo
  # Initial screen
 <img src="./src/assets/imgs/project-image.png" alt="Screenshot 1" width="600" height="300"/>
 
+# Search example screen showing the "Salat" and "Fleisch":
+
+<img src="./src/assets/imgs/salatspeisekarte.png" alt="Screenshot 1" width="600" height="300"/>
+
+<img src="./src/assets/imgs/fleischspeisekarte.png" alt="Screenshot 1" width="600" height="300"/>
+
+# example with "Nudeln":
+
+<img src="./src/assets/imgs/nudelnspeisekarte.png" alt="Screenshot 1" width="600" height="300"/>
+
+
  
 # Installation
 To run this app locally, follow these steps:
