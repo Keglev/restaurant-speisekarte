@@ -115,11 +115,16 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ## Technologies:
 
-Frontend: *React, *Next.js
+Frontend: 
+ **React**
+ **Next.js**
 
-Backend: *Node.js, *JavaScript
+Backend:
+**Node.js**
+**JavaScript**
 
-Styling: *CSS
+Styling: 
+**CSS**
 
 ## Contributing
 
