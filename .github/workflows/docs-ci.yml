@@ -1,0 +1,66 @@
+name: Documentation CI
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'docs/**'
+      - 'README.md'
+      - '*.md'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'docs/**'
+      - 'README.md'
+      - '*.md'
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Validate Markdown files
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: 'yes'
+        use-verbose-mode: 'yes'
+        config-file: '.github/workflows/markdown-link-check-config.json'
+        
+    - name: Check documentation structure
+      run: |
+        echo "Validating documentation structure..."
+        
+        # Check if required documentation files exist
+        required_files=(
+          "docs/README.md"
+          "README.md"
+        )
+        
+        for file in "${required_files[@]}"; do
+          if [ ! -f "$file" ]; then
+            echo "❌ Required file missing: $file"
+            exit 1
+          else
+            echo "✅ Found: $file"
+          fi
+        done
+        
+        echo "✅ Documentation structure validation passed!"
+        
+    - name: Generate documentation summary
+      run: |
+        echo "📚 Documentation Update Summary" >> $GITHUB_STEP_SUMMARY
+        echo "================================" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📁 **Files Changed:**" >> $GITHUB_STEP_SUMMARY
+        
+        # List changed markdown files
+        git diff --name-only HEAD~1 HEAD | grep -E '\.(md|markdown)$' | while read file; do
+          echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
+        done
+        
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "ℹ️ **Note:** This is a documentation-only update. No deployment was triggered." >> $GITHUB_STEP_SUMMARY
