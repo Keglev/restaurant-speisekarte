@@ -1,3 +1,19 @@
+##############################################################################
+# 🚀 Deploy to Vercel (Overview)
+# ---------------------------------------------------------------------------
+# Purpose:
+# - Build and deploy the Next.js application to Vercel when code lands on
+#   primary branches (main/master).
+# - Use the official Vercel CLI to avoid dependency on community actions that
+#   may be removed. Authentication requires a `VERCEL_TOKEN` stored in GitHub
+#   Secrets. Optionally, set `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` for
+#   deterministic, project-scoped deploys.
+#
+# Notes for maintainers:
+# - Keep this workflow non-interactive by passing `--confirm` to the CLI.
+# - The job runs a build step locally to fail fast and provide clearer logs
+#   for diagnosing build regressions prior to invoking the remote deploy.
+##############################################################################
 name: Deploy to Vercel
 
 on:
@@ -17,21 +33,33 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    # ──────────────────────────────────────────────────────────────────────────
+    # 1️⃣ Checkout code
+    # 🔎 Why: ensure the job operates on the exact commit that triggered the run
+    # ──────────────────────────────────────────────────────────────────────────
     - name: Checkout code
       uses: actions/checkout@v4
       
+    # 2️⃣ Setup Node.js (build/test environment)
+    # 🔧 Why: standardize Node runtime for build reproducibility
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
         
+    # 3️⃣ Install dependencies
+    # 📦 Why: use `npm ci` to get deterministic, lockfile-driven installs
     - name: Install dependencies
       run: npm ci
       
+    # 4️⃣ Lint (optional gate)
+    # 🧭 Why: maintain code quality prior to build/deploy
     - name: Run lint
       run: npm run lint
       
+    # 5️⃣ Build application
+    # 🏗️ Why: compile assets and ensure the production build succeeds
     - name: Build application
       run: npm run build
       
@@ -44,25 +72,43 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     
     steps:
+    # ──────────────────────────────────────────────────────────────────────────
+    # 1️⃣ (deploy) Checkout code
+    # 🔎 Why: ensure deploy uses the same source tree produced by the build job
+    # ──────────────────────────────────────────────────────────────────────────
     - name: Checkout code
       uses: actions/checkout@v4
       
+    # 2️⃣ (deploy) Node runtime
+    # 🔧 Why: Some deploy steps (e.g., Vercel CLI) require a Node runtime
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
         
+    # 3️⃣ (deploy) Install dependencies
+    # 📦 Why: Required for production build artifacts (if deploy relies on node modules)
     - name: Install dependencies
       run: npm ci
       
+    # 4️⃣ (deploy) Build application (verify again on deploy node)
+    # 🏗️ Why: double-check build on the deploy job to be explicit and self-contained
     - name: Build application
       run: npm run build
       
+    # 5️⃣ (deploy) Deploy to Vercel using CLI
+    # 🔐 Why: use Vercel CLI to avoid reliance on potentially-removed GitHub actions.
+    #   - Authentication: requires `VERCEL_TOKEN` stored in GitHub Secrets
+    #   - Optional: set `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` for deterministic deploy
+    # 🔍 What this does: installs the Vercel CLI and runs a production deploy
     - name: Deploy to Vercel (CLI)
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        # Optionally provide org/project IDs if you want to bind to a specific Vercel project
+        # VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+        # VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       run: |
         npm i -g vercel@latest
-        # Use Vercel CLI to deploy to the configured project (requires VERCEL_TOKEN)
+        # ⚠️ The `--confirm` flag avoids interactive prompts in CI; `--prod` publishes to production
         vercel --prod --confirm

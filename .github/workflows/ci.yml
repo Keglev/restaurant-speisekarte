@@ -1,3 +1,17 @@
+##############################################################################
+# 🚦 CI - Code Quality (Overview)
+# ---------------------------------------------------------------------------
+# Purpose:
+# - Validate code that lands on primary branches (main/master).
+# - Install dependencies, run linter, build the application, and run tests.
+# - Fail fast on issues to reduce noisy investigations and maintain CI as a
+#   reliable gate for production readiness.
+#
+# Enterprise comment strategy:
+# - Top-of-file overview block for quick orientation
+# - Numbered and brief per-step comments below for traceable stages
+# - Emoji tags to aid skimming by engineers and reviewers
+##############################################################################
 name: CI - Code Quality
 
 on:
@@ -27,23 +41,41 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    # 1️⃣ Checkout repository
+    # 📌 Why: retrieve the code so subsequent steps operate on the exact commit
+    # ⚠️ Note: actions/checkout@v4 supports LFS and submodules if needed later
     - name: Checkout code
       uses: actions/checkout@v4
       
+    # 2️⃣ Setup Node.js environment
+    # 🔧 Why: Ensure Node version consistency across local dev and CI
+    # 🔁 Cache: npm cache is enabled for faster dependency installs
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
         
+    # 3️⃣ Install dependencies
+    # 📦 Why: clean, reproducible install using package-lock.json
+    # 🔒 npm ci is used to ensure deterministic installs in CI
     - name: Install dependencies
       run: npm ci
       
+    # 4️⃣ Linting (Static Analysis)
+    # 🧭 Why: Surface formatting and common code issues early (style + errors)
+    # ✅ Fail fast on style errors to avoid noisy build investigations later
     - name: Run lint
       run: npm run lint
       
+    # 5️⃣ Build (Production verification)
+    # 🏗️ Why: Confirm project builds successfully in CI (mirrors production)
+    # 📈 Build errors indicate missing dependencies or misconfiguration
     - name: Build application
       run: npm run build
       
+    # 6️⃣ Run tests (optional)
+    # 🧪 Why: Execute unit/integration tests when provided (non-blocking if absent)
+    # ⚙️ --if-present avoids failing when no test script is defined
     - name: Run tests (if available)
       run: npm test --if-present

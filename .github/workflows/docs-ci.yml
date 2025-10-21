@@ -1,3 +1,15 @@
+##############################################################################
+# 📘 Documentation CI (Overview)
+# ---------------------------------------------------------------------------
+# Purpose:
+# - Validate documentation markdown for broken links and minimal structure.
+# - Provide a human-friendly summary of changed docs in the GitHub run summary.
+# - Reduce docs regressions by catching 404s and missing top-level files early.
+#
+# Comment strategy:
+# - Keep a concise top-of-file overview for maintainers
+# - Add short per-step comments inside `steps` to explain 'why'
+##############################################################################
 name: Documentation CI
 
 on:
@@ -19,9 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    # 1️⃣ Checkout repository (documentation files)
+    # 🔎 Why: operate on the exact commit's docs so link-checks reference correct files
     - name: Checkout code
       uses: actions/checkout@v4
       
+    # 2️⃣ Validate Markdown links (link checker)
+    # 🔗 Why: detect dead links early. The check uses the project's config file
+    # to allow/deny patterns and fine-tune behavior.
     - name: Validate Markdown files
       uses: gaurav-nelson/github-action-markdown-link-check@v1
       with:
@@ -29,6 +46,8 @@ jobs:
         use-verbose-mode: 'yes'
         config-file: '.github/workflows/markdown-link-check-config.json'
         
+    # 3️⃣ Check documentation structure (presence of high-level docs)
+    # 🧭 Why: enforce minimal required files so docs navigation works in consumers
     - name: Check documentation structure
       run: |
         echo "Validating documentation structure..."
@@ -50,6 +69,8 @@ jobs:
         
         echo "✅ Documentation structure validation passed!"
         
+    # 4️⃣ Generate a short summary for the run (human-friendly)
+    # 📋 Why: provide a step summary in the GitHub UI to help reviewers
     - name: Generate documentation summary
       run: |
         echo "📚 Documentation Update Summary" >> $GITHUB_STEP_SUMMARY
@@ -57,7 +78,7 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "📁 **Files Changed:**" >> $GITHUB_STEP_SUMMARY
         
-        # List changed markdown files
+        # List changed markdown files (best-effort; falls back to empty when none)
         git diff --name-only HEAD~1 HEAD | grep -E '\.(md|markdown)$' | while read file; do
           echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
         done
