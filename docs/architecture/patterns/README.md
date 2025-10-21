@@ -301,7 +301,7 @@ test('should filter products when category is clicked', () => {
 
 ---
 
-**Related Documentation**:
-- [Component Architecture](../components/)
+-**Related Documentation**:
+- [Component Architecture](../components/README.md)
 - [System Overview](../system-overview.md)
 - [State Management](./state-management.md)

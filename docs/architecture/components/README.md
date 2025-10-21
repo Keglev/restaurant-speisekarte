@@ -194,7 +194,7 @@ interface KartenProps {
 
 ---
 
-**Related Documentation**:
-- [Individual Component Docs](./components/)
+-**Related Documentation**:
+- [Individual Component Docs](./components/README.md)
 - [Design Patterns](../patterns/)
 - [System Overview](../system-overview.md)
