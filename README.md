@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Restaurant Speisekarte
 
 **Interactive German Restaurant Menu System - Next.js & React**
@@ -140,34 +139,6 @@ Key Architecture Documents:
 
 ---
 
-<a id="environment-profiles"></a>
-## 🌐 Environment Profiles
-
-The application supports multiple environment configurations:
-
-- **Development** (`npm run dev`) — Local development with hot reload
-- **Production** (`npm run build` + `npm start`) — Optimized build for deployment  
-- **CI/CD** — Automated testing and deployment environments
-
----
-
-## ✅ CI/CD
-
-### 🔄 Automated Pipelines
-
-**Code Pipeline** (`ci.yml` + `deploy.yml`):
-- ✅ Runs on code changes in `src/`, `pages/`, `public/`
-- ✅ Installs dependencies and runs linting
-- ✅ Builds application and verifies build success
-- ✅ Deploys to Vercel production on main branch pushes
-
-**Documentation Pipeline** (`docs-ci.yml`):
-- ✅ Runs only on documentation changes in `docs/`, `README.md`
-- ✅ Validates documentation structure and links
-- ✅ No deployment triggered for docs-only changes
-
-This separation ensures efficient CI/CD by avoiding unnecessary deployments for documentation updates while maintaining code quality for both code and documentation changes.
-
 <a id="available-scripts"></a>
 ## Available Scripts
 
@@ -271,11 +242,11 @@ To run this app locally, follow these steps:
 
 1. Clone the repository:
 
-  git clone https://github.com/your-username/restaurant-finder-app.git
+   git clone https://github.com/Keglev/restaurant-speisekarte.git
 
 2. Navigate to the project directory:
    
-  cd restaurant-finder-app
+   cd restaurant-speisekarte
 
 3. Install the dependencies:
 

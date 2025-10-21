@@ -195,6 +195,9 @@ interface KartenProps {
 ---
 
 -**Related Documentation**:
-- [Individual Component Docs](./components/README.md)
+**Related Documentation**:
+- [Karten Component](./karten-component.md)
+- [Kategorien Component](./kategorien-component.md)
+- [Suchtleiste Component](./suchtleiste-component.md)
 - [Design Patterns](../patterns/)
 - [System Overview](../system-overview.md)
