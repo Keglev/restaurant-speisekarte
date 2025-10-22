@@ -47,7 +47,11 @@ jobs:
     - run: npm ci
     - run: npm run build
     - name: Deploy to Vercel
-      uses: vercel/action@v1
+      # The repository previously used the community `vercel/action` which may be unavailable.
+      # Current workflow installs the official Vercel CLI and runs `vercel --prod` using `VERCEL_TOKEN`.
+      run: |
+        npm i -g vercel@latest
+        vercel --prod --confirm
       with:
         vercel-token: ${{ secrets.VERCEL_TOKEN }}
         vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
