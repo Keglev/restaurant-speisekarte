@@ -183,3 +183,10 @@ npm run lint       # Run ESLint
 
 📬 For questions or contributions, feel free to [open an issue](https://github.com/Keglev/restaurant-speisekarte/issues).
 =======
+
+## Documentation
+
+The project documentation is published here: https://Keglev.github.io/restaurant-speisekarte/docs/enterprise-api/index.html
+
+The docs landing page: https://Keglev.github.io/restaurant-speisekarte/
+
