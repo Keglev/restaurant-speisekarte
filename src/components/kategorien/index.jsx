@@ -9,6 +9,11 @@ import icon4 from "../../../public/assets/bebidas.png";
 import icon5 from "../../../public/assets/salada.png";
 import icon6 from "../../../public/assets/sobremesa.png";
 
+/**
+ * Kategorien - category selector component
+ *
+ * @param {{ griffFilter: (kategorie:string)=>void, knopftGetippt: string }} props
+ */
 const Kategorien = ({ griffFilter, knopftGetippt }) => {
   return (
     <section className={styles.section_kategorien}>

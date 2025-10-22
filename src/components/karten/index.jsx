@@ -1,5 +1,11 @@
 import Image from 'next/image'
 import styles from "./karten.module.css";
+
+/**
+ * Karten - menu card component
+ *
+ * @param {{ produkt: { id:number, name:string, kategorie:string, preis:number, beschreibung:string, bild:any } }} props
+ */
 const Karten = ({ produkt }) => {
   return (
     <div className={styles.container}>

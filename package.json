@@ -6,11 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs:api": "documentation build src/service src/data src/components -f html -o docs/api",
+    "docs:api-md": "documentation build src/service src/data src/components -f md -o docs/api-md"
   },
   "dependencies": {
+    "next": "14.1.2",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.1.2"
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "documentation": "^14.0.0"
   }
 }

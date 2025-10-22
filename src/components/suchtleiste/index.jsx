@@ -3,6 +3,11 @@ import Image from 'next/image'
 import styles from "./suchtleiste.module.css";
 import Lupe from '../../../public/assets/lupa.png';
 
+/**
+ * SuchtLeiste - search input component
+ *
+ * @param {{ textSuchtGetippt: string, griffSucht: (text:string)=>void }} props
+ */
 const SuchtLeiste = ({ textSuchtGetippt, griffSucht }) => {
   return (
     <div className={styles.container}>

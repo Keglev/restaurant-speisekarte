@@ -29,6 +29,20 @@ import WaldorfSalat from "../../public/assets/img/salada-waldorf.jpg";
 import grieschischerSalat from "../../public/assets/img/salada-grega.jpg";
 import NicoiseSalat from "../../public/assets/img/salada-nicoise.jpg";
 
+/**
+ * @typedef {Object} Produkt
+ * @property {number} id
+ * @property {string} name
+ * @property {string} kategorie
+ * @property {number} preis
+ * @property {string} beschreibung
+ * @property {any} bild - imported image module (Next.js Image compatible)
+ */
+
+/**
+ * Product catalog for the menu application.
+ * @type {Produkt[]}
+ */
 export const produkte = [
   {
     id: 1,
