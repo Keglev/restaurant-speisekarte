@@ -85,3 +85,35 @@ jobs:
         
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "ℹ️ **Note:** This is a documentation-only update. No deployment was triggered." >> $GITHUB_STEP_SUMMARY
+
+  publish-docs:
+    needs: validate-docs
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Build API docs (jsdoc/documentation)
+        run: |
+          # Ensure output directory exists
+          rm -rf docs/_site || true
+          mkdir -p docs/_site
+          npm run docs:api
+
+      - name: Publish generated docs to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_site
+          publish_branch: gh-pages
+          user_name: docs-bot
+          user_email: docs-bot@example.com
