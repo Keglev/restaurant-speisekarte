@@ -12,6 +12,10 @@
 ##############################################################################
 name: Documentation CI
 
+# Allow this workflow to push generated files to the repository (gh-pages)
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ main, master ]
@@ -171,3 +175,5 @@ jobs:
           publish_branch: gh-pages
           user_name: docs-bot
           user_email: docs-bot@example.com
+          allow_empty_commit: true
+          keep_files: true
