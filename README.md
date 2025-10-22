@@ -191,3 +191,5 @@ npm run lint       # Run ESLint
 
 
 
+
+<!-- docs-ci-trigger: 2025-10-22T18:28:46.0784081+02:00 -->
