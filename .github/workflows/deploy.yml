@@ -16,6 +16,11 @@
 ##############################################################################
 name: Deploy to Vercel
 
+# Allow both push-based runs and manual dispatches so maintainers can run the
+# updated workflow file from the Actions UI. Important: re-running a previous
+# workflow run will reuse the workflow file that existed at that run's commit.
+# To ensure the latest workflow is used, either push a new commit or use the
+# manual "Run workflow" button (workflow_dispatch) after this change is pushed.
 on:
   push:
     branches: [ main, master ]
@@ -27,6 +32,7 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - 'next.config.mjs'
+  workflow_dispatch: {}
 
 jobs:
   test:
