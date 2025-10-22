@@ -1,0 +1,10 @@
+body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;margin:0;color:#222}
+.container{max-width:980px;margin:0 auto;padding:24px}
+.enterprise-header{background:#0b2545;color:#fff;padding:18px 0}
+.enterprise-header h1{margin:0;font-size:20px}
+.enterprise-header nav{margin-top:8px}
+.enterprise-header nav a{color:#bcd7ff;margin-right:12px;text-decoration:none}
+.enterprise-main{background:#fff;padding:28px;border-radius:8px;margin-top:-20px;box-shadow:0 6px 20px rgba(4,15,26,0.08)}
+.enterprise-footer{padding:20px 0;text-align:center;color:#667}
+pre{background:#0b1220;color:#d6e6ff;padding:12px;border-radius:6px;overflow:auto}
+code{background:#f5f7fb;padding:2px 6px;border-radius:4px}
