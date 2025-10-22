@@ -1,0 +1,13 @@
+{
+  "plugins": ["plugins/markdown"],
+  "source": {
+    "include": ["docs/deployment"],
+    "includePattern": ".+\\.md$",
+    "excludePattern": "(node_modules)"
+  },
+  "opts": {
+    "destination": "docs/_site/deployment-site",
+    "recurse": true
+  }
+}
+

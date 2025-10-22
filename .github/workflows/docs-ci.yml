@@ -102,12 +102,50 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      - name: Build API docs (jsdoc/documentation)
+      - name: Build documentation (JSDoc + Markdown)
         run: |
-          # Ensure output directory exists
+          # Ensure a clean output directory
           rm -rf docs/_site || true
           mkdir -p docs/_site
-          npm run docs:api
+          # Build all documentation outputs: API reference and markdown -> HTML
+          npm run docs:build
+
+      - name: Create enterprise docs landing
+        run: |
+          # Remove any legacy generated site leftovers
+          rm -rf docs/enterprise-api || true
+
+          # Create a minimal landing page that links to the generated sections
+          cat > docs/_site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width,initial-scale=1" />
+            <title>Project Documentation — Restaurant Speisekarte</title>
+            <style>
+              body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; padding: 40px; color: #111 }
+              a.button { display:inline-block; margin:8px 0; padding:12px 18px; background:#0366d6; color:#fff; text-decoration:none; border-radius:6px }
+              .list { margin-top:20px }
+            </style>
+          </head>
+          <body>
+            <h1>Documentation for Restaurant Speisekarte</h1>
+            <p>This site contains the generated API reference and the markdown-based architecture & deployment documentation.</p>
+
+            <div class="list">
+              <h2>Published docs</h2>
+              <ul>
+                <li><a class="button" href="./reference/">API Reference</a></li>
+                <li><a class="button" href="./architecture-site/">Architecture Documentation</a></li>
+                <li><a class="button" href="./deployment/">Deployment Documentation</a></li>
+              </ul>
+            </div>
+
+            <footer style="margin-top:40px;color:#666">Published from the <code>master</code> branch via CI</footer>
+          </body>
+          </html>
+          HTML
 
       - name: Publish generated docs to gh-pages
         uses: peaceiris/actions-gh-pages@v4
