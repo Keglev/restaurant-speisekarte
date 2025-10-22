@@ -9,10 +9,12 @@
 <body>
   <header class="enterprise-header">
     <div class="container">
-      <h1>Restaurant Speisekarte — Docs</h1>
-      <nav>
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
         <a href="https://github.com/Keglev/restaurant-speisekarte/blob/master/README.md" target="_blank" rel="noopener">Home</a>
-        <a href="./reference/">API</a>
         <a href="./architecture-site/">Architecture</a>
         <a href="./deployment-site/">Deployment</a>
       </nav>
@@ -20,7 +22,8 @@
   </header>
 
   <main class="container enterprise-main">
-    {{CONTENT}}
+    <aside class="enterprise-aside">{{SIDENAV}}</aside>
+    <section class="enterprise-content">{{CONTENT}}</section>
   </main>
 
   <footer class="enterprise-footer">
