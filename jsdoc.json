@@ -5,10 +5,10 @@
   "source": {
     "include": ["docs/_generated"],
     "includePattern": "\\.js$",
-    "excludePattern": "(node_modules|docs/enterprise-api)"
+    "excludePattern": "(node_modules)"
   },
   "opts": {
-    "destination": "docs/enterprise-api",
+    "destination": "docs/_site/reference",
     "recurse": false
   }
 }

@@ -116,7 +116,7 @@ Key Architecture Documents:
 - [State Management Patterns](./docs/architecture/patterns/state-management.md) — Application state handling strategies
 - [Data Flow Architecture](./docs/architecture/patterns/data-flow.md) — Data flow from source to UI components
 
-The project documentation is published here: https://Keglev.github.io/restaurant-speisekarte/docs/enterprise-api/index.html
+The project documentation is published here: https://Keglev.github.io/restaurant-speisekarte/
 
 The docs landing page: https://Keglev.github.io/restaurant-speisekarte/
 

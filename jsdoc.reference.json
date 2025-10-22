@@ -1,0 +1,17 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "include": ["src"],
+    "includePattern": ".+\\.js$",
+    "excludePattern": "(^|\\/)node_modules\\/"
+  },
+  "plugins": ["plugins/markdown"],
+  "opts": {
+    "destination": "docs/_site/reference",
+    "recurse": true,
+    "template": "node_modules/jsdoc/templates/default"
+  }
+}
+

@@ -1,0 +1,13 @@
+{
+  "plugins": ["plugins/markdown"],
+  "source": {
+    "include": ["docs/architecture"],
+    "includePattern": ".+\\.md$",
+    "excludePattern": "(node_modules)"
+  },
+  "opts": {
+    "destination": "docs/_site/architecture-site",
+    "recurse": true
+  }
+}
+
