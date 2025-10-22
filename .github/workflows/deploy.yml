@@ -111,10 +111,20 @@ jobs:
         # VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
         # VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       run: |
+        # Fail fast with a clear error if token is missing
         if [ -z "${VERCEL_TOKEN}" ]; then
           echo "ERROR: VERCEL_TOKEN secret is not set. Add it in repository settings -> Secrets.";
           exit 1;
         fi
-        npm i -g vercel@latest
-        # ⚠️ The `--confirm` flag avoids interactive prompts in CI; `--prod` publishes to production
-        vercel --prod --confirm
+
+        # Validate token early so failures are easy to diagnose (prints a helpful message)
+        echo "Validating Vercel token..."
+        npx vercel@latest whoami --token "${VERCEL_TOKEN}" || {
+          echo "ERROR: VERCEL_TOKEN appears invalid. Generate a new token at https://vercel.com/account/tokens and update repository secrets.";
+          exit 1;
+        }
+
+        # Use npx to avoid global installs and pass the token explicitly to the CLI.
+        # Replace deprecated --confirm with --yes.
+        echo "Deploying to Vercel (production)..."
+        npx vercel@latest --prod --token "${VERCEL_TOKEN}" --yes
