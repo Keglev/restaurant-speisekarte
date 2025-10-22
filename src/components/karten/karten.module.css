@@ -1,3 +1,10 @@
+/*
+  karten.module.css - Styles for the Karten component
+
+  Enterprise maintenance header:
+  - Use module-scoped class names only. Do not add global selectors here.
+  - Keep button sizing responsive; unit tests may assert the existence of certain classes.
+*/
 .container {
     width: 250px;
     flex-grow: 1;

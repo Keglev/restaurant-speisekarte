@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "next": "14.1.2",
+    "prop-types": "^15.8.1",
     "react": "^18",
-    "react-dom": "^18",
-    "prop-types": "^15.8.1"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "documentation": "^14.0.0"
+    "documentation": "^14.0.0",
+    "eslint": "9.38.0",
+    "eslint-config-next": "16.0.0"
   }
 }

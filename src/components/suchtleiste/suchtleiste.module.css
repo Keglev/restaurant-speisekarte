@@ -1,3 +1,11 @@
+/*
+  suchtleiste.module.css - Styles for the search/input component
+
+  Enterprise maintenance header:
+  - Keep the input accessible and visually consistent across breakpoints.
+  - Avoid global element selectors; keep styles module-scoped.
+*/
+
 .container {
     width: 100%;
     max-width: 1024px;

@@ -1,3 +1,10 @@
+/*
+  kategorien.module.css - Styles for the Kategorien component
+
+  Enterprise maintenance header:
+  - Use module-scoped class names only. Do not add global selectors here.
+  - Keep button sizing responsive; unit tests may assert the existence of certain classes.
+*/
 .section_kategorien {
     width: 100%;
     max-width: 1024px;

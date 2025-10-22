@@ -29,3 +29,17 @@ SuchtLeiste.propTypes = {
 }
 
 export default SuchtLeiste;
+ 
+/**
+ * Enterprise maintenance notes:
+ * - This component is intentionally minimal: it exposes the current search text and a
+ *   change handler. Keep debounce/throttling in the parent container or use a
+ *   shared hook for consistency across the app.
+ * - Accessibility: the input uses placeholder text. Consider adding a visually-hidden
+ *   label if screen-reader clarity is needed for enterprise audits.
+ * - Styling decisions are kept in the module CSS to ensure no global leakage.
+ */
+
+// Decorative icon - small and non-interactive
+
+// Controlled input - value comes from parent to keep this component stateless
