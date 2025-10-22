@@ -131,6 +131,14 @@ jobs:
         }
 
         # Use npx to avoid global installs and pass the token explicitly to the CLI.
-        # Replace deprecated --confirm with --yes.
+        # Construct the CLI command and append org/project flags only when provided
+        # to avoid interactive prompts asking to select a project/scope.
         echo "Deploying to Vercel (production)..."
-        npx vercel@latest --prod --token "${VERCEL_TOKEN}" --yes
+        CMD=("npx" "vercel@latest" "--prod" "--token" "${VERCEL_TOKEN}" "--yes")
+        if [ -n "${VERCEL_ORG_ID}" ]; then
+          CMD+=("--org" "${VERCEL_ORG_ID}")
+        fi
+        if [ -n "${VERCEL_PROJECT_ID}" ]; then
+          CMD+=("--project" "${VERCEL_PROJECT_ID}")
+        fi
+        "${CMD[@]}"
