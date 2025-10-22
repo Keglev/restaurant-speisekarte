@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "docs:api": "documentation build src/service src/data src/components -f html -o docs/api",
-    "docs:api-md": "documentation build src/service src/data src/components -f md -o docs/api-md"
+    "docs:api": "documentation build docs/_generated/service-api.js docs/_generated/produkt-typedef.js docs/_generated/components-typedefs.js -f html -o docs/enterprise-api",
+    "docs:api-md": "documentation build docs/_generated/service-api.js docs/_generated/produkt-typedef.js docs/_generated/components-typedefs.js -f md -o docs/enterprise-api-md"
   },
   "dependencies": {
     "next": "14.1.2",
