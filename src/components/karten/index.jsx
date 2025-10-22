@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import PropTypes from 'prop-types'
 import styles from "./karten.module.css";
 
 /**
@@ -25,4 +26,15 @@ const Karten = ({ produkt }) => {
     </div>
   );
 };
+Karten.propTypes = {
+  produkt: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    kategorie: PropTypes.string,
+    preis: PropTypes.number,
+    beschreibung: PropTypes.string,
+    bild: PropTypes.any,
+  }).isRequired,
+}
+
 export default Karten;

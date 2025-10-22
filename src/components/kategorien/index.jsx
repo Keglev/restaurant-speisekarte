@@ -14,6 +14,8 @@ import icon6 from "../../../public/assets/sobremesa.png";
  *
  * @param {{ griffFilter: (kategorie:string)=>void, knopftGetippt: string }} props
  */
+import PropTypes from 'prop-types'
+
 const Kategorien = ({ griffFilter, knopftGetippt }) => {
   return (
     <section className={styles.section_kategorien}>
@@ -48,4 +50,9 @@ const Kategorien = ({ griffFilter, knopftGetippt }) => {
     </section>
   );
 };
+Kategorien.propTypes = {
+  griffFilter: PropTypes.func.isRequired,
+  knopftGetippt: PropTypes.string,
+}
+
 export default Kategorien;

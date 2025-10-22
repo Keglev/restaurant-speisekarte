@@ -2,6 +2,7 @@ import Image from 'next/image'
 
 import styles from "./suchtleiste.module.css";
 import Lupe from '../../../public/assets/lupa.png';
+import PropTypes from 'prop-types'
 
 /**
  * SuchtLeiste - search input component
@@ -21,5 +22,10 @@ const SuchtLeiste = ({ textSuchtGetippt, griffSucht }) => {
     </div>
   );
 };
+
+SuchtLeiste.propTypes = {
+  textSuchtGetippt: PropTypes.string,
+  griffSucht: PropTypes.func.isRequired,
+}
 
 export default SuchtLeiste;
