@@ -32,7 +32,6 @@ on:
       - '*.md'
     
   pull_request:
-  workflow_dispatch: {}
     branches: [ main, master ]
     paths:
       - 'docs/**'
@@ -45,7 +44,8 @@ on:
       - '.github/workflows/**'
       - 'README.md'
       - '*.md'
-    
+      
+  workflow_dispatch: {} 
 
 jobs:
   validate-docs:
