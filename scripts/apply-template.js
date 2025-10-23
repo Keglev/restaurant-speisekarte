@@ -78,7 +78,20 @@ function buildSideNavFor(subdir) {
       } else if (/\.html$/i.test(it.name)) {
         // make links site-relative (the template adds a base href for gh-pages)
         const link = `${subdir}/${rel}`;
-        html += `<li><a href="${link}">${it.name.replace(/\.html$/i,'')}</a></li>`;
+        // Try to extract a friendly label from the target HTML: prefer <title>, then <h1>, else filename
+        let label = it.name.replace(/\.html$/i,'');
+        try {
+          const content = fs.readFileSync(p, 'utf8');
+          const titleMatch = content.match(/<title>([^<]*)<\/title>/i);
+          if (titleMatch && titleMatch[1].trim()) label = titleMatch[1].trim();
+          else {
+            const h1Match = content.match(/<h1[^>]*>([^<]*)<\/h1>/i);
+            if (h1Match && h1Match[1].trim()) label = h1Match[1].trim();
+          }
+        } catch (err) {
+          // fall back to filename
+        }
+        html += `<li><a href="${link}">${label}</a></li>`;
       }
     }
     html += '</ul>';
