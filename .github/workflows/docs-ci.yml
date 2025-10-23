@@ -44,6 +44,8 @@ on:
       - '.github/workflows/**'
       - 'README.md'
       - '*.md'
+
+  workflow_dispatch: {}
     
 
 jobs:
