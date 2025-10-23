@@ -44,8 +44,9 @@ on:
       - '.github/workflows/**'
       - 'README.md'
       - '*.md'
-      
-  workflow_dispatch: {} 
+
+  workflow_dispatch: {}
+    
 
 jobs:
   validate-docs:
