@@ -11,7 +11,7 @@
   "opts": {
     "destination": "docs/_site/reference",
     "recurse": true,
-    "template": "./jsdoc-template"
+    "template": "node_modules/jsdoc/templates/default"
   }
 }
 
