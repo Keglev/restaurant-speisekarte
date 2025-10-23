@@ -109,4 +109,27 @@ const sideNavHtml = `<div class="side-navs">${archNav}${deployNav}</div>`;
 template = template.replace('{{SIDENAV}}', sideNavHtml);
 
 walk(siteRoot);
+
+// Generate a polished landing page using the enterprise template + side navigation
+try {
+  const landingContent = `
+    <div class="landing-hero">
+      <h1>Documentation for Restaurant Speisekarte</h1>
+      <p>This site contains the generated API reference and the markdown-based architecture &amp; deployment documentation.</p>
+      <p class="landing-actions">
+        <a class="button" href="reference/">Code reference</a>
+        <a class="button" href="architecture-site/">Architecture</a>
+        <a class="button" href="deployment-site/">Deployment</a>
+      </p>
+    </div>
+  `;
+
+  const landingHtml = template.replace('{{TITLE}}', 'Documentation — Restaurant Speisekarte').replace('{{CONTENT}}', landingContent);
+  const outIndex = path.join(siteRoot, 'index.html');
+  fs.writeFileSync(outIndex, landingHtml, 'utf8');
+  console.log('Landing page written to', outIndex);
+} catch (err) {
+  console.error('Failed to write landing page:', err);
+}
+
 console.log('Template applied to site root:', siteRoot);
