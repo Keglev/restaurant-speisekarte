@@ -117,9 +117,9 @@ try {
       <h1>Documentation for Restaurant Speisekarte</h1>
       <p>This site contains the generated API reference and the markdown-based architecture &amp; deployment documentation.</p>
       <p class="landing-actions">
-        <a class="button" href="reference/">Code reference</a>
-        <a class="button" href="architecture-site/">Architecture</a>
-        <a class="button" href="deployment-site/">Deployment</a>
+        <a class="button" href="reference/index.html">Reference</a>
+        <a class="button" href="architecture-site/system-overview.html">Architecture</a>
+        <a class="button" href="deployment-site/README.html">Deployment</a>
       </p>
     </div>
   `;
