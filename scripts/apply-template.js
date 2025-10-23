@@ -76,7 +76,8 @@ function buildSideNavFor(subdir) {
       if (it.isDirectory()) {
         html += `<li class="nav-group">${it.name}${walkDir(p, base)}</li>`;
       } else if (/\.html$/i.test(it.name)) {
-        const link = `./${subdir}/${rel}`;
+        // make links site-relative (the template adds a base href for gh-pages)
+        const link = `${subdir}/${rel}`;
         html += `<li><a href="${link}">${it.name.replace(/\.html$/i,'')}</a></li>`;
       }
     }
@@ -87,7 +88,7 @@ function buildSideNavFor(subdir) {
   return `<nav class="side-nav" data-site="${subdir}">` + walkDir(root, root) + '</nav>';
 }
 
-// Insert generated SIDENAV into template
+  // Insert generated SIDENAV into template
 const archNav = buildSideNavFor('architecture-site');
 const deployNav = buildSideNavFor('deployment-site');
 // combined nav: architecture first, then deployment
