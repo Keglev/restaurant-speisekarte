@@ -1,4 +1,4 @@
-##############################################################################
+﻿##############################################################################
 # 📘 Documentation CI (Overview)
 # ---------------------------------------------------------------------------
 # Purpose:
@@ -27,10 +27,9 @@ on:
       - 'jsdoc*.json'
       - 'scripts/**'
       - 'templates/**'
-      - '.github/workflows/**'
       - 'README.md'
       - '*.md'
-    
+
   pull_request:
     branches: [ main, master ]
     paths:
@@ -41,25 +40,23 @@ on:
       - 'jsdoc*.json'
       - 'scripts/**'
       - 'templates/**'
-      - '.github/workflows/**'
       - 'README.md'
       - '*.md'
 
   workflow_dispatch: {}
     
-
 jobs:
   validate-docs:
     runs-on: ubuntu-latest
     
     steps:
-    # 1️⃣ Checkout repository (documentation files)
-    # 🔎 Why: operate on the exact commit's docs so link-checks reference correct files
+    # 1 Checkout repository (documentation files)
+    #  Why: operate on the exact commit's docs so link-checks reference correct files
     - name: Checkout code
       uses: actions/checkout@v4
       
-    # 2️⃣ Validate Markdown links (link checker)
-    # 🔗 Why: detect dead links early. The check uses the project's config file
+    # 2 Validate Markdown links (link checker)
+    #  Why: detect dead links early. The check uses the project's config file
     # to allow/deny patterns and fine-tune behavior.
     - name: Validate Markdown files
       uses: gaurav-nelson/github-action-markdown-link-check@v1
@@ -68,8 +65,8 @@ jobs:
         use-verbose-mode: 'yes'
         config-file: '.github/workflows/markdown-link-check-config.json'
         
-    # 3️⃣ Check documentation structure (presence of high-level docs)
-    # 🧭 Why: enforce minimal required files so docs navigation works in consumers
+    # 3 Check documentation structure (presence of high-level docs)
+    #  Why: enforce minimal required files so docs navigation works in consumers
     - name: Check documentation structure
       run: |
         echo "Validating documentation structure..."
@@ -82,31 +79,31 @@ jobs:
         
         for file in "${required_files[@]}"; do
           if [ ! -f "$file" ]; then
-            echo "❌ Required file missing: $file"
+            echo " Required file missing: $file"
             exit 1
           else
-            echo "✅ Found: $file"
+            echo " Found: $file"
           fi
         done
         
-        echo "✅ Documentation structure validation passed!"
+        echo " Documentation structure validation passed!"
         
-    # 4️⃣ Generate a short summary for the run (human-friendly)
-    # 📋 Why: provide a step summary in the GitHub UI to help reviewers
+    # 4 Generate a short summary for the run (human-friendly)
+    #  Why: provide a step summary in the GitHub UI to help reviewers
     - name: Generate documentation summary
       run: |
-        echo "📚 Documentation Update Summary" >> $GITHUB_STEP_SUMMARY
+        echo " Documentation Update Summary" >> $GITHUB_STEP_SUMMARY
         echo "================================" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "📁 **Files Changed:**" >> $GITHUB_STEP_SUMMARY
+        echo " **Files Changed:**" >> $GITHUB_STEP_SUMMARY
         
         # List changed markdown files (best-effort; falls back to empty when none)
-        git diff --name-only HEAD~1 HEAD | grep -E '\.(md|markdown)$' | while read file; do
+        git diff --name-only HEAD~1 HEAD | grep -E '\\.(md|markdown)$' | while read file; do
           echo "- \`$file\`" >> $GITHUB_STEP_SUMMARY
         done
         
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "ℹ️ **Note:** This is a documentation-only update. No deployment was triggered." >> $GITHUB_STEP_SUMMARY
+        echo "ℹ **Note:** This is a documentation-only update. No deployment was triggered." >> $GITHUB_STEP_SUMMARY
 
   publish-docs:
     needs: validate-docs
@@ -144,7 +141,7 @@ jobs:
           <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width,initial-scale=1" />
-            <title>Project Documentation — Restaurant Speisekarte</title>
+            <title>Project Documentation  Restaurant Speisekarte</title>
             <style>
               body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; padding: 40px; color: #111 }
               a.button { display:inline-block; margin:8px 0; padding:12px 18px; background:#0366d6; color:#fff; text-decoration:none; border-radius:6px }
