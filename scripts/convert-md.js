@@ -17,7 +17,13 @@ function ensureDir(dir) {
 function convertFile(srcPath, outPath) {
   const md = fs.readFileSync(srcPath, 'utf8');
   const html = marked(md);
-  const outHtml = `<!doctype html>\n<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${path.basename(srcPath)}</title></head><body>${html}</body></html>`;
+  // Prefer the first markdown H1 (# Title) as the HTML title; fall back to filename sans extension
+  let title = path.basename(srcPath).replace(/\.md$/i, '');
+  const h1 = md.match(/^#\s+(.+)$/m);
+  if (h1 && h1[1]) {
+    title = h1[1].trim();
+  }
+  const outHtml = `<!doctype html>\n<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title></head><body>${html}</body></html>`;
   fs.writeFileSync(outPath, outHtml, 'utf8');
 }
 
