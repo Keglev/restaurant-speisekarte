@@ -6,6 +6,10 @@
     {
       "pattern": "^https://localhost"
     }
+    ,
+    {
+      "pattern": "^https://Keglev\\.github\\.io/restaurant-speisekarte(/|$)"
+    }
   ],
   "timeout": "20s",
   "retryOn429": true,
