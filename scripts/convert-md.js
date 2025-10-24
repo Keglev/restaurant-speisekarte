@@ -2,6 +2,16 @@ const fs = require('fs');
 const path = require('path');
 const { marked } = require('marked');
 
+// Configure marked options explicitly to avoid deprecation warnings and control behavior
+marked.setOptions({
+  gfm: true,
+  headerIds: true,    // generate id attributes for headings
+  mangle: false,      // do not mangle autolinked email addresses
+  langPrefix: 'language-',
+  smartLists: true,
+  smartypants: false,
+});
+
 if (process.argv.length < 4) {
   console.error('Usage: node scripts/convert-md.js <srcDir> <outDir>');
   process.exit(1);
@@ -16,7 +26,7 @@ function ensureDir(dir) {
 
 function convertFile(srcPath, outPath) {
   const md = fs.readFileSync(srcPath, 'utf8');
-  const html = marked(md);
+  const html = marked.parse(md);
   // Prefer the first markdown H1 (# Title) as the HTML title; fall back to filename sans extension
   let title = path.basename(srcPath).replace(/\.md$/i, '');
   const h1 = md.match(/^#\s+(.+)$/m);

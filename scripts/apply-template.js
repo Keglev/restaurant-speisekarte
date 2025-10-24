@@ -19,6 +19,22 @@ if (!fs.existsSync(templatePath)) {
 }
 
 let template = fs.readFileSync(templatePath, 'utf8');
+// Determine base href dynamically: prefer DOCS_BASE_URL, then GitHub repo, else relative './'
+const envBase = process.env.DOCS_BASE_URL;
+let baseHref = './';
+if (envBase && envBase.trim()) {
+  baseHref = envBase.trim();
+} else if (process.env.GITHUB_REPOSITORY) {
+  // GITHUB_REPOSITORY is in the form 'owner/repo'
+  const repo = process.env.GITHUB_REPOSITORY.split('/');
+  if (repo.length === 2) {
+    const owner = repo[0];
+    const name = repo[1];
+    baseHref = `https://${owner}.github.io/${name}/`;
+  }
+}
+// Replace placeholder in template
+template = template.replace('{{BASE_HREF}}', baseHref);
 ensureDir(path.dirname(cssDest));
 fs.copyFileSync(cssSrc, cssDest);
 // copy logo if present (so templates' logo is available under site assets)
