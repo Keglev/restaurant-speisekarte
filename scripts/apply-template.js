@@ -36,6 +36,10 @@ function ensureDir(dir) {
 
 function wrapFile(filePath) {
   const html = fs.readFileSync(filePath, 'utf8');
+  // If this file was already wrapped by the enterprise template, skip to avoid double-wrapping
+  if (html.indexOf('<!-- enterprise-template -->') !== -1) {
+    return;
+  }
   // naive extract body content
   const bodyMatch = html.match(/<body[^>]*>((.|\n|\r)*)<\/body>/i);
   const content = bodyMatch ? bodyMatch[1] : html;
@@ -43,6 +47,9 @@ function wrapFile(filePath) {
   const title = titleMatch ? titleMatch[1] : path.basename(filePath);
   // inject SIDENAV if available (the template will contain {{SIDENAV}})
   let replaced = template.replace('{{TITLE}}', title).replace('{{CONTENT}}', content);
+
+  // insert an explicit marker so future runs can detect the file is already wrapped
+  replaced = '<!-- enterprise-template -->\n' + replaced;
 
   // If this file is inside the generated reference area, remove the top-level API/Code reference nav link
   const rel = path.relative(siteRoot, filePath).replace(/\\/g, '/');
