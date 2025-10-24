@@ -105,22 +105,25 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "ℹ **Note:** This is a documentation-only update. No deployment was triggered." >> $GITHUB_STEP_SUMMARY
 
+  # Publish the generated documentation
+  #  Why: publish the built documentation site to the gh-pages branch for hosting
   publish-docs:
     needs: validate-docs
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+    # Ensure the publish directory exists and is sane before publishing
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+      # 2 Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-
+      # 3 Install dependencies
       - name: Install dependencies
         run: npm ci || npm install
-
+      # 4 Build documentation site
       - name: Build documentation (JSDoc + Markdown)
         run: |
           # Ensure a clean output directory
@@ -128,7 +131,7 @@ jobs:
           mkdir -p docs/_site
           # Build all documentation outputs: API reference and markdown -> HTML
           npm run docs:build
-
+      # 5 Post-process and prepare for publish
       - name: Create enterprise docs landing
         run: |
           # Remove any legacy generated site leftovers
@@ -165,17 +168,17 @@ jobs:
           </body>
           </html>
           HTML
-
+      # 6 Post-process links in generated HTML (fix any relative paths)
       - name: Post-process generated HTML links
         run: |
           # ensure node is available
           node --version
           node scripts/postprocess-links.js
-
+      # 7 Run site link-checker on generated site (fail on missing links)
       - name: Run site link-checker (fail on missing links)
         run: |
           node scripts/link-check.js
-
+      # 8 Ensure publish directory exists and is sane
       - name: Ensure publish directory exists and is sane
         run: |
           # Verify the publish directory exists and is not empty
@@ -196,7 +199,7 @@ jobs:
           fi
 
           echo "Publish directory looks OK: ${GITHUB_WORKSPACE}/docs/_site"
-
+      # 9 Publish generated docs to gh-pages branch
       - name: Publish generated docs to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
