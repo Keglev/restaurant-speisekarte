@@ -81,8 +81,10 @@ function walk(dir) {
 
 // Build side-navs for known sites (architecture-site, deployment-site)
 function buildSideNavFor(subdir) {
+  // Return the inner <ul> structure for the given subdir so the caller can
+  // wrap it under a top-level label (Architecture or Deployment).
   const root = path.join(siteRoot, subdir);
-  if (!fs.existsSync(root)) return '';
+  if (!fs.existsSync(root)) return '<ul></ul>';
 
   function walkDir(dir, base) {
     const items = fs.readdirSync(dir, { withFileTypes: true }).sort((a,b)=>a.name.localeCompare(b.name));
@@ -115,14 +117,33 @@ function buildSideNavFor(subdir) {
     return html;
   }
 
-  return `<nav class="side-nav" data-site="${subdir}">` + walkDir(root, root) + '</nav>';
+  return walkDir(root, root);
 }
 
   // Insert generated SIDENAV into template
-const archNav = buildSideNavFor('architecture-site');
-const deployNav = buildSideNavFor('deployment-site');
-// combined nav: architecture first, then deployment
-const sideNavHtml = `<div class="side-navs">${archNav}${deployNav}</div>`;
+const archInner = buildSideNavFor('architecture-site');
+const deployInner = buildSideNavFor('deployment-site');
+// Build grouped navs: top-level "Architecture" and "Deployment" labels that contain
+// the component/patterns/workflows lists underneath. Clicking the top label goes
+// to the system overview (Architecture) or deployment README (Deployment).
+const sideNavHtml = `
+  <div class="side-navs">
+    <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="architecture-site/system-overview.html">Architecture</a>
+          ${archInner}
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="deployment-site/README.html">Deployment</a>
+          ${deployInner}
+        </li>
+      </ul>
+    </nav>
+  </div>
+`;
 template = template.replace('{{SIDENAV}}', sideNavHtml);
 
 walk(siteRoot);
