@@ -180,7 +180,9 @@ try {
 
   const landingHtml = template.replace('{{TITLE}}', 'Documentation — Restaurant Speisekarte').replace('{{CONTENT}}', landingContent);
   const outIndex = path.join(siteRoot, 'index.html');
-  fs.writeFileSync(outIndex, landingHtml, 'utf8');
+  // Ensure the landing page includes the enterprise-template marker so CI can detect templated sites
+  const landingWithMarker = '<!-- enterprise-template -->\n' + landingHtml;
+  fs.writeFileSync(outIndex, landingWithMarker, 'utf8');
   console.log('Landing page written to', outIndex);
 } catch (err) {
   console.error('Failed to write landing page:', err);
