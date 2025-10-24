@@ -104,7 +104,7 @@ This application follows modern Next.js architecture patterns with clear separat
 <a id="index-for-architecture-docs"></a>
 ### 📚 Index for Architecture docs
 
-- [📁 Complete Architecture Documentation](./docs/README.md) — Comprehensive architecture documentation hub
+- [📁 Index for Complete Architecture Documentation](./docs/README.md) — Comprehensive architecture documentation hub
 - [🏗️ System Architecture Overview](./docs/architecture/system-overview.md) — High-level system design and component interaction
 - [📦 Component Documentation](./docs/architecture/components/) — Detailed component specifications
 - [🎯 Design Patterns](./docs/architecture/patterns/) — Implementation patterns and best practices
@@ -188,8 +188,6 @@ npm run lint       # Run ESLint
 📬 For questions or contributions, feel free to [open an issue](https://github.com/Keglev/restaurant-speisekarte/issues).
 
 ---
-
-
 
 
 <!-- docs-ci-trigger: 2025-10-22T18:28:46.0784081+02:00 -->
