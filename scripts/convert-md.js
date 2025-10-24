@@ -5,7 +5,7 @@ const { marked } = require('marked');
 // Configure marked options explicitly to avoid deprecation warnings and control behavior
 marked.setOptions({
   gfm: true,
-  headerIds: true,    // generate id attributes for headings
+  headerIds: false,    // disable automatic heading id generation (marked v5 deprecates default behavior)
   mangle: false,      // do not mangle autolinked email addresses
   langPrefix: 'language-',
   smartLists: true,
