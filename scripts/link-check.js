@@ -51,13 +51,29 @@ function existsTarget(target) {
   try {
     if (fs.existsSync(t) && fs.statSync(t).isFile()) return true;
     if (fs.existsSync(t) && fs.statSync(t).isDirectory()) {
-      const idx = path.join(t, 'index.html');
-      if (fs.existsSync(idx)) return true;
+      // check for common index files inside the directory
+      const candidates = ['index.html', 'README.html', 'index.htm', 'default.html'];
+      for (const c of candidates) {
+        const p = path.join(t, c);
+        if (fs.existsSync(p)) return true;
+      }
     }
     // try common alternatives: add .html
     if (!t.endsWith('.html') && fs.existsSync(t + '.html')) return true;
     // if path ends with a slash-like separator, try index.html
     if (fs.existsSync(path.join(t, 'index.html'))) return true;
+    // Fallback: try case-insensitive match for common index filenames (helps if generator created README.html vs README.HTML)
+    try {
+      const dir = fs.existsSync(t) && fs.statSync(t).isDirectory() ? t : path.dirname(t);
+      if (fs.existsSync(dir)) {
+        const names = fs.readdirSync(dir);
+        for (const cand of ['index.html','readme.html','Index.html','README.HTML']) {
+          if (names.includes(cand)) return true;
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
   } catch (err) {
     // swallow and return false below
   }
