@@ -10,6 +10,8 @@ const siteRoot = process.argv[2];
 const templatePath = path.join(__dirname, '..', 'templates', 'enterprise', 'base.html');
 const cssSrc = path.join(__dirname, '..', 'templates', 'enterprise', 'enterprise.css');
 const cssDest = path.join(siteRoot, 'assets', 'enterprise.css');
+const logoSrc = path.join(__dirname, '..', 'templates', 'enterprise', 'logo.svg');
+const logoDest = path.join(siteRoot, 'assets', 'logo.svg');
 
 if (!fs.existsSync(templatePath)) {
   console.error('Template not found:', templatePath);
@@ -19,6 +21,14 @@ if (!fs.existsSync(templatePath)) {
 let template = fs.readFileSync(templatePath, 'utf8');
 ensureDir(path.dirname(cssDest));
 fs.copyFileSync(cssSrc, cssDest);
+// copy logo if present (so templates' logo is available under site assets)
+try {
+  if (fs.existsSync(logoSrc)) {
+    fs.copyFileSync(logoSrc, logoDest);
+  }
+} catch (err) {
+  console.warn('Could not copy logo:', err && err.message ? err.message : err);
+}
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
