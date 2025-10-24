@@ -143,6 +143,23 @@ jobs:
       - name: Run site link-checker (fail on missing links)
         run: |
           node scripts/link-check.js
+      # 8a Assert enterprise template marker is present before publishing
+      # Why: prevent accidental publish of repo root or untemplated files. Fails fast if marker missing.
+      - name: Assert enterprise template marker present
+        run: |
+          MARKER='<!-- enterprise-template -->'
+          FILE=docs/_site/index.html
+          echo "Checking for enterprise template marker in $FILE"
+          if [ ! -f "$FILE" ]; then
+            echo "Publish candidate missing: $FILE"
+            exit 1
+          fi
+          if ! grep -F "$MARKER" "$FILE" > /dev/null; then
+            echo "ERROR: enterprise template marker not found in $FILE"
+            echo "Refusing to publish. Ensure apply-template.js inserted the marker into the built site."
+            exit 1
+          fi
+          echo "Template marker found in $FILE"
       # 8 Ensure publish directory exists and is sane
       - name: Ensure publish directory exists and is sane
         run: |
