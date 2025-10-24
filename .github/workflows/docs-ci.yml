@@ -169,7 +169,20 @@ jobs:
           </html>
           HTML
 
+      - name: Post-process generated HTML links
+        run: |
+          # ensure node is available
+          node --version
+          node scripts/postprocess-links.js
+
+      - name: Run site link-checker (fail on missing links)
+        run: |
+          node scripts/link-check.js
+
       - name: Publish generated docs to gh-pages
+        # Safety: ensure we're publishing the expected directory
+        run: |
+          if [ "${{ github.workspace }}/docs/_site" != "${{ github.workspace }}/docs/_site" ]; then echo "Publish dir mismatch"; exit 1; fi
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
