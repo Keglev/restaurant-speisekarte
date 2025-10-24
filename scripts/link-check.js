@@ -45,14 +45,22 @@ function resolveUrl(fromFile, url) {
 }
 
 function existsTarget(target) {
-  if (!target) return true;
-  if (fs.existsSync(target)) return true;
-  // if target is a directory, check for index.html
-  if (fs.existsSync(target) && fs.statSync(target).isDirectory()) {
-    return fs.existsSync(path.join(target, 'index.html'));
+  if (!target) return false;
+  // normalize the path we check
+  const t = path.normalize(target);
+  try {
+    if (fs.existsSync(t) && fs.statSync(t).isFile()) return true;
+    if (fs.existsSync(t) && fs.statSync(t).isDirectory()) {
+      const idx = path.join(t, 'index.html');
+      if (fs.existsSync(idx)) return true;
+    }
+    // try common alternatives: add .html
+    if (!t.endsWith('.html') && fs.existsSync(t + '.html')) return true;
+    // if path ends with a slash-like separator, try index.html
+    if (fs.existsSync(path.join(t, 'index.html'))) return true;
+  } catch (err) {
+    // swallow and return false below
   }
-  // try adding index.html if path ends with '/'
-  if (fs.existsSync(target + path.sep + 'index.html')) return true;
   return false;
 }
 
@@ -73,12 +81,16 @@ function main() {
       if (isExternal(url)) continue;
   let resolved = resolveUrl(f, url);
       if (!resolved) continue;
-      // if it points to a directory, resolve index
-      if (fs.existsSync(resolved) && fs.statSync(resolved).isDirectory()) {
-        resolved = path.join(resolved, 'index.html');
-      }
-      if (!fs.existsSync(resolved)) {
-        missing.push({file: path.relative(SITE, f), url, resolved: path.relative(SITE, resolved)});
+      // prefer checking with existsTarget which understands directories and .html alternates
+      if (!existsTarget(resolved)) {
+        // attempt to normalize common fallbacks for reporting
+        let reported = resolved;
+        if (fs.existsSync(resolved) && fs.statSync(resolved).isDirectory()) {
+          reported = path.join(resolved, 'index.html');
+        } else if (fs.existsSync(resolved + '.html')) {
+          reported = resolved + '.html';
+        }
+        missing.push({file: path.relative(SITE, f), url, resolved: path.relative(SITE, reported)});
       }
     }
   }
