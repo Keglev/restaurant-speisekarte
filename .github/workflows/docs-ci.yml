@@ -176,10 +176,28 @@ jobs:
         run: |
           node scripts/link-check.js
 
-      - name: Publish generated docs to gh-pages
-        # Safety: ensure we're publishing the expected directory
+      - name: Ensure publish directory exists and is sane
         run: |
-          if [ "${{ github.workspace }}/docs/_site" != "${{ github.workspace }}/docs/_site" ]; then echo "Publish dir mismatch"; exit 1; fi
+          # Verify the publish directory exists and is not empty
+          if [ ! -d "${GITHUB_WORKSPACE}/docs/_site" ]; then
+            echo "Publish dir does not exist: ${GITHUB_WORKSPACE}/docs/_site"
+            exit 1
+          fi
+
+          if [ -z "$(ls -A ${GITHUB_WORKSPACE}/docs/_site)" ]; then
+            echo "Publish dir is empty: ${GITHUB_WORKSPACE}/docs/_site"
+            exit 1
+          fi
+
+          # Prevent accidental publish of the repository root
+          if [ "$(realpath ${GITHUB_WORKSPACE}/docs/_site)" = "$(realpath ${GITHUB_WORKSPACE})" ]; then
+            echo "Publish dir resolves to repo root; aborting."
+            exit 1
+          fi
+
+          echo "Publish directory looks OK: ${GITHUB_WORKSPACE}/docs/_site"
+
+      - name: Publish generated docs to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
