@@ -18,7 +18,26 @@ body{
 .enterprise-content{flex:1;background:#ffffff;padding:30px;border-radius:10px;box-shadow:0 10px 30px rgba(15,23,42,0.06)}
 .enterprise-footer{padding:22px 0;text-align:center;color:#6b7280}
 .enterprise-content h1,.enterprise-content h2,.enterprise-content h3{color:#0b2545}
-pre{background:#0b1220;color:#d6e6ff;padding:14px;border-radius:8px;overflow:auto}
+/* Default code style (enterprise): prefer a light, readable code block inside docs content.
+	 We override potential dark themes coming from JSDoc/prettify so code is visible. */
+.enterprise-content pre,
+.enterprise-content pre.prettyprint,
+.enterprise-content pre.prettyprint ol,
+.enterprise-content .prettyprint {
+	background:#f5f7fb !important;
+	color:#0b2545 !important;
+	padding:14px !important;
+	border-radius:8px !important;
+	overflow:auto !important;
+	border:1px solid rgba(11,37,75,0.06) !important;
+}
+.enterprise-content code,
+.enterprise-content pre code {
+	background:transparent !important;
+	color:inherit !important;
+	padding:0 !important;
+	border-radius:0 !important;
+}
 code{background:#f5f7fb;padding:3px 6px;border-radius:4px}
 .side-nav ul{list-style:none;padding-left:8px}
 .side-nav li{margin:8px 0}
