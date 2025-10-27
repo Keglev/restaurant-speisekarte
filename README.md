@@ -104,11 +104,10 @@ This application follows modern Next.js architecture patterns with clear separat
 <a id="index-for-architecture-docs"></a>
 ### 📚 Index for Architecture docs
 
-- [📁 Index for Complete Architecture Documentation](./docs/README.md) — Comprehensive architecture documentation hub
-- [🏗️ System Architecture Overview](./docs/architecture/system-overview.md) — High-level system design and component interaction
-- [📦 Component Documentation](./docs/architecture/components/) — Detailed component specifications
-- [🎯 Design Patterns](./docs/architecture/patterns/) — Implementation patterns and best practices
-- [🚀 Deployment Strategy](./docs/deployment/) — CI/CD and deployment documentation
+- [📁 Index for Complete Architecture Documentation](https://keglev.github.io/restaurant-speisekarte/index.html) — Comprehensive architecture documentation hub
+- [🏗️ System reference](https://keglev.github.io/restaurant-speisekarte/reference/index.html) — High-level system design and component interaction
+- [🎯 Design Patterns](https://keglev.github.io/restaurant-speisekarte/architecture-site/patterns/README.html) — Implementation patterns and best practices
+- [🚀 Deployment Strategy](https://keglev.github.io/restaurant-speisekarte/deployment-site/README.html) — CI/CD and deployment documentation
 
 Key Architecture Documents:
 
