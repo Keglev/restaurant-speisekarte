@@ -119,6 +119,9 @@ jobs:
         rm -rf docs/_site || true
         mkdir -p docs/_site
         npm run docs:build
+    - name: Post-process generated HTML links (smoke)
+      run: |
+        node scripts/postprocess-links.js
     - name: Run tolerant MD->HTML checker
       run: |
         node ./scripts/check-md-links.js

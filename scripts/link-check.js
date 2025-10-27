@@ -3,7 +3,26 @@ const fs = require('fs');
 const path = require('path');
 
 const SITE = path.join(__dirname, '..', 'docs', '_site');
-const BASE = '/Keglev/restaurant-speisekarte/'; // matches template base href
+// Determine possible site-base prefixes to strip from root-relative URLs.
+// In CI GITHUB_REPOSITORY is 'owner/repo' — site-root used by the template is '/repo' or '/owner/repo'.
+const repoEnv = process.env.GITHUB_REPOSITORY || '';
+// Fallback: derive repo name from the repository folder name so local runs behave similarly
+const repoNameFallback = path.basename(path.join(__dirname, '..'));
+let repoBase = '';
+if (repoEnv) {
+  const parts = repoEnv.split('/');
+  repoBase = '/' + parts[1];
+} else if (repoNameFallback) {
+  repoBase = '/' + repoNameFallback;
+}
+const possibleBases = [
+  // owner/repo style
+  repoEnv ? ('/' + repoEnv + '/') : null,
+  // repo only (fallback to local folder name when GITHUB_REPOSITORY isn't set)
+  repoBase ? (repoBase + '/') : null,
+  // plain root
+  '/',
+].filter(Boolean);
 
 function walk(dir) {
   const files = [];
@@ -26,10 +45,34 @@ function resolveUrl(fromFile, url) {
   if (!u || u === '.') return null;
   if (isExternal(u)) return null;
   if (u.startsWith('/')) {
-    // root-relative: strip known base if present
+    // root-relative: strip any known base prefix (owner/repo or repo) if present,
+    // otherwise strip the leading slash and resolve relative to site root.
     let rel = u;
-    if (rel.startsWith(BASE)) rel = rel.slice(BASE.length);
-    else if (rel.startsWith('/')) rel = rel.slice(1);
+    // If the URL contains the repo name (with or without owner), strip up to and including it.
+    // This handles variants like '/owner/repo/...' and '/repo/...'.
+    if (repoBase) {
+      const marker = '/' + repoBase.replace(/^\//, '') + '/';
+      const idx = rel.indexOf(marker);
+      if (idx !== -1) {
+        rel = rel.slice(idx + marker.length);
+      } else {
+        for (const b of possibleBases) {
+          if (rel.startsWith(b)) {
+            rel = rel.slice(b.length);
+            break;
+          }
+        }
+      }
+    } else {
+      for (const b of possibleBases) {
+        if (rel.startsWith(b)) {
+          rel = rel.slice(b.length);
+          break;
+        }
+      }
+    }
+    // remove any remaining leading slash
+    if (rel.startsWith('/')) rel = rel.slice(1);
     return path.join(SITE, rel);
   }
   // Try resolving relative to the file (most links are written relative to their page)
