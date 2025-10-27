@@ -19,21 +19,22 @@ if (!fs.existsSync(templatePath)) {
 }
 
 let template = fs.readFileSync(templatePath, 'utf8');
-// Determine base href root dynamically: prefer DOCS_BASE_URL, then GitHub repo, else relative './'
+// Determine base href dynamically: prefer DOCS_BASE_URL, then GitHub repo, else relative './'
 const envBase = process.env.DOCS_BASE_URL;
-let baseHrefRoot = './';
+let baseHref = './';
 if (envBase && envBase.trim()) {
-  baseHrefRoot = envBase.trim();
+  baseHref = envBase.trim();
 } else if (process.env.GITHUB_REPOSITORY) {
+  // GITHUB_REPOSITORY is in the form 'owner/repo'
   const repo = process.env.GITHUB_REPOSITORY.split('/');
   if (repo.length === 2) {
     const owner = repo[0];
     const name = repo[1];
-    baseHrefRoot = `https://${owner}.github.io/${name}/`;
+    baseHref = `https://${owner}.github.io/${name}/`;
   }
 }
-// Keep the template placeholder {{BASE_HREF}} for per-file replacement so that
-// each wrapped page gets a base href pointing to its directory under the site root.
+// Replace placeholder in template
+template = template.replace('{{BASE_HREF}}', baseHref);
 ensureDir(path.dirname(cssDest));
 fs.copyFileSync(cssSrc, cssDest);
 // copy logo if present (so templates' logo is available under site assets)
@@ -61,13 +62,7 @@ function wrapFile(filePath) {
   const titleMatch = html.match(/<title>([^<]*)<\/title>/i);
   const title = titleMatch ? titleMatch[1] : path.basename(filePath);
   // inject SIDENAV if available (the template will contain {{SIDENAV}})
-  // Compute per-file base href: this points at the site's root + the file's directory
-  const relDir = path.relative(siteRoot, path.dirname(filePath)).replace(/\\/g, '/');
-  const dirSuffix = relDir ? `${relDir}/` : '';
-  // Ensure baseHrefRoot ends with '/'
-  const root = baseHrefRoot.endsWith('/') ? baseHrefRoot : `${baseHrefRoot}/`;
-  const baseForFile = root + dirSuffix;
-  let replaced = template.replace('{{BASE_HREF}}', baseForFile).replace('{{TITLE}}', title).replace('{{CONTENT}}', content);
+  let replaced = template.replace('{{TITLE}}', title).replace('{{CONTENT}}', content);
 
   // insert an explicit marker so future runs can detect the file is already wrapped
   replaced = '<!-- enterprise-template -->\n' + replaced;
@@ -183,8 +178,7 @@ try {
     </div>
   `;
 
-  const landingBase = baseHrefRoot.endsWith('/') ? baseHrefRoot : `${baseHrefRoot}/`;
-  const landingHtml = template.replace('{{BASE_HREF}}', landingBase).replace('{{TITLE}}', 'Documentation — Restaurant Speisekarte').replace('{{CONTENT}}', landingContent);
+  const landingHtml = template.replace('{{TITLE}}', 'Documentation — Restaurant Speisekarte').replace('{{CONTENT}}', landingContent);
   const outIndex = path.join(siteRoot, 'index.html');
   // Ensure the landing page includes the enterprise-template marker so CI can detect templated sites
   const landingWithMarker = '<!-- enterprise-template -->\n' + landingHtml;
