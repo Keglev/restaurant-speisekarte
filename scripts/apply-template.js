@@ -19,22 +19,18 @@ if (!fs.existsSync(templatePath)) {
 }
 
 let template = fs.readFileSync(templatePath, 'utf8');
-// Determine base href dynamically: prefer DOCS_BASE_URL, then GitHub repo, else relative './'
-const envBase = process.env.DOCS_BASE_URL;
-let baseHref = './';
-if (envBase && envBase.trim()) {
-  baseHref = envBase.trim();
+
+// Compute a SITE_ROOT URL prefix for asset links (used in template as {{SITE_ROOT}}).
+// Prefer explicit SITE_ROOT env (e.g. '/repo-name'), else derive from GITHUB_REPOSITORY -> '/repo'.
+let siteRootUrl = '';
+if (process.env.SITE_ROOT && process.env.SITE_ROOT.trim()) {
+  siteRootUrl = process.env.SITE_ROOT.trim().replace(/\/$/, '');
 } else if (process.env.GITHUB_REPOSITORY) {
-  // GITHUB_REPOSITORY is in the form 'owner/repo'
-  const repo = process.env.GITHUB_REPOSITORY.split('/');
-  if (repo.length === 2) {
-    const owner = repo[0];
-    const name = repo[1];
-    baseHref = `https://${owner}.github.io/${name}/`;
-  }
+  const parts = process.env.GITHUB_REPOSITORY.split('/');
+  if (parts.length === 2) siteRootUrl = '/' + parts[1];
 }
-// Replace placeholder in template
-template = template.replace('{{BASE_HREF}}', baseHref);
+// Replace SITE_ROOT placeholder in the template so asset links become site-root absolute.
+template = template.replace(/\{\{SITE_ROOT\}\}/g, siteRootUrl);
 ensureDir(path.dirname(cssDest));
 fs.copyFileSync(cssSrc, cssDest);
 // copy logo if present (so templates' logo is available under site assets)
@@ -61,8 +57,20 @@ function wrapFile(filePath) {
   const content = bodyMatch ? bodyMatch[1] : html;
   const titleMatch = html.match(/<title>([^<]*)<\/title>/i);
   const title = titleMatch ? titleMatch[1] : path.basename(filePath);
+  // compute per-file base href so relative links inside the page resolve correctly
+  const relPath = path.relative(siteRoot, filePath).replace(/\\/g, '/');
+  const dir = path.dirname(relPath).replace(/\\/g, '/');
+  let perFileBase = './';
+  if (dir && dir !== '.') {
+    perFileBase = (siteRootUrl ? siteRootUrl : '') + '/' + dir + '/';
+  } else {
+    perFileBase = (siteRootUrl ? siteRootUrl + '/' : './');
+  }
+
   // inject SIDENAV if available (the template will contain {{SIDENAV}})
-  let replaced = template.replace('{{TITLE}}', title).replace('{{CONTENT}}', content);
+  // replace {{BASE_HREF}} per-file so content-relative links work, while assets use {{SITE_ROOT}}
+  const templWithBase = template.replace('{{BASE_HREF}}', perFileBase);
+  let replaced = templWithBase.replace('{{TITLE}}', title).replace('{{CONTENT}}', content);
 
   // insert an explicit marker so future runs can detect the file is already wrapped
   replaced = '<!-- enterprise-template -->\n' + replaced;
