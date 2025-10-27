@@ -1,0 +1,121 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/deployment-site/workflows/">
+  <title>CI - Code Quality (GitHub Actions)</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content"><h1>CI - Code Quality (GitHub Actions)</h1>
+<p>This document explains the <code>ci.yml</code> workflow located at <code>.github/workflows/ci.yml</code>.</p>
+<h2>Purpose</h2>
+<ul>
+<li>Run code quality checks, linting, and build verification for source changes.</li>
+<li>Triggered on pushes and pull requests affecting core source files.</li>
+</ul>
+<h2>Triggers</h2>
+<ul>
+<li>Pushes to <code>main</code> or <code>master</code> when paths under <code>src/</code>, <code>pages/</code>, <code>public/</code>, <code>styles/</code>, <code>package.json</code>, <code>package-lock.json</code>, or <code>next.config.mjs</code> change.</li>
+<li>Pull requests targeting <code>main</code> or <code>master</code> with the same path filters.</li>
+</ul>
+<h2>Jobs</h2>
+<ul>
+<li><code>test</code>: Runs on <code>ubuntu-latest</code> and performs:<ul>
+<li>Checkout code</li>
+<li>Setup Node.js 18</li>
+<li>Install dependencies (<code>npm ci</code>)</li>
+<li>Run lint (<code>npm run lint</code>)</li>
+<li>Build application (<code>npm run build</code>)</li>
+<li>Run tests if present (<code>npm test --if-present</code>)</li>
+</ul>
+</li>
+</ul>
+<h2>Workflow (excerpt)</h2>
+<pre><code class="language-yaml">name: CI - Code Quality
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - &#39;src/**&#39;
+      - &#39;pages/**&#39;
+      - &#39;public/**&#39;
+      - &#39;styles/**&#39;
+      - &#39;package.json&#39;
+      - &#39;package-lock.json&#39;
+      - &#39;next.config.mjs&#39;
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - &#39;src/**&#39;
+      - &#39;pages/**&#39;
+      - &#39;public/**&#39;
+      - &#39;styles/**&#39;
+      - &#39;package.json&#39;
+      - &#39;package-lock.json&#39;
+      - &#39;next.config.mjs&#39;
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: &#39;18&#39;
+        cache: &#39;npm&#39;
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run build
+    - run: npm test --if-present
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>Keep <code>node-version</code> aligned with local development and Vercel runtime (currently 18).</li>
+<li>Add additional test steps as unit/integration tests are added to the repo.</li>
+</ul>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>

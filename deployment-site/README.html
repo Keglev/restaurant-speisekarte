@@ -1,0 +1,286 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/deployment-site/">
+  <title>Deployment Documentation</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content"><h1>Deployment Documentation</h1>
+<h2>Overview</h2>
+<p>The Restaurant Speisekarte application uses a modern CI/CD pipeline with Vercel for hosting, providing automated builds, deployments, and optimizations.</p>
+<h2>Deployment Architecture</h2>
+<pre><code>GitHub Repository
+       ↓
+GitHub Actions (CI/CD)
+       ↓
+Vercel Platform
+       ↓
+Global CDN Distribution
+       ↓
+End Users
+</code></pre>
+<h2>CI/CD Pipeline Strategy</h2>
+<h3>Multi-Pipeline Architecture</h3>
+<p>The project implements separate pipelines for different types of changes:</p>
+<h4>1. Code Pipeline (<code>ci.yml</code> + <code>deploy.yml</code>)</h4>
+<p><strong>Triggers</strong>: Changes to source code files</p>
+<ul>
+<li><code>src/**</code></li>
+<li><code>pages/**</code></li>
+<li><code>public/**</code></li>
+<li><code>styles/**</code></li>
+<li><code>package.json</code></li>
+<li><code>next.config.mjs</code></li>
+</ul>
+<p><strong>Process</strong>:</p>
+<ol>
+<li><p><strong>CI Stage</strong> (<code>ci.yml</code>):</p>
+<ul>
+<li>Install dependencies</li>
+<li>Run ESLint</li>
+<li>Build application</li>
+<li>Run tests (if available)</li>
+</ul>
+</li>
+<li><p><strong>Deploy Stage</strong> (<code>deploy.yml</code>):</p>
+<ul>
+<li>Repeat CI validation</li>
+<li>Deploy to Vercel production</li>
+<li>Update live application</li>
+</ul>
+</li>
+</ol>
+<h4>2. Documentation Pipeline (<code>docs-ci.yml</code>)</h4>
+<p><strong>Triggers</strong>: Changes to documentation files</p>
+<ul>
+<li><code>docs/**</code></li>
+<li><code>README.md</code></li>
+<li><code>*.md</code> files</li>
+</ul>
+<p><strong>Process</strong>:</p>
+<ul>
+<li>Validate Markdown syntax</li>
+<li>Check link integrity</li>
+<li>Verify documentation structure</li>
+<li><strong>No deployment triggered</strong></li>
+</ul>
+<h3>Pipeline Benefits</h3>
+<p>✅ <strong>Efficient Resource Usage</strong>: Documentation changes don&#39;t trigger unnecessary deployments<br>✅ <strong>Fast Feedback</strong>: Code changes get immediate validation<br>✅ <strong>Quality Gates</strong>: All changes must pass linting and build checks<br>✅ <strong>Separation of Concerns</strong>: Code and documentation have separate validation rules</p>
+<h2>Workflow documentation</h2>
+<p>Detailed, human-readable versions of the GitHub Actions workflows are available here:</p>
+<ul>
+<li><a href="./workflows/ci.html">CI - Code Quality</a> — documents <code>.github/workflows/ci.yml</code></li>
+<li><a href="./workflows/deploy.html">Deploy to Vercel</a> — documents <code>.github/workflows/deploy.yml</code></li>
+<li><a href="./workflows/docs-ci.html">Documentation CI</a> — documents <code>.github/workflows/docs-ci.yml</code></li>
+</ul>
+<h2>Vercel Integration</h2>
+<h3>Deployment Configuration</h3>
+<p><strong>Platform</strong>: Vercel<br><strong>Framework</strong>: Next.js (auto-detected)<br><strong>Build Command</strong>: <code>npm run build</code><br><strong>Output Directory</strong>: <code>.next/</code><br><strong>Node.js Version</strong>: 18.x</p>
+<h3>Environment Setup</h3>
+<h4>Required Secrets (for manual deployment)</h4>
+<p>If using the full CD pipeline with Vercel API:</p>
+<pre><code class="language-bash"># GitHub Repository Secrets
+VERCEL_TOKEN=your_vercel_token
+VERCEL_ORG_ID=your_organization_id
+VERCEL_PROJECT_ID=your_project_id
+</code></pre>
+<h4>Alternative: Vercel Git Integration</h4>
+<p><strong>Recommended approach</strong>: Use Vercel&#39;s built-in Git integration</p>
+<ul>
+<li>Automatic deployments on push to main/master</li>
+<li>Preview deployments for pull requests</li>
+<li>No manual secret configuration required</li>
+</ul>
+<h2>Build Process</h2>
+<h3>Build Optimization</h3>
+<ol>
+<li><p><strong>Next.js Static Generation</strong></p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;next build&quot;,
+    &quot;start&quot;: &quot;next start&quot;
+  }
+}
+</code></pre>
+</li>
+<li><p><strong>Asset Optimization</strong></p>
+<ul>
+<li>Automatic image optimization with Next.js Image</li>
+<li>CSS optimization and minification</li>
+<li>JavaScript bundling and code splitting</li>
+</ul>
+</li>
+<li><p><strong>Performance Features</strong></p>
+<ul>
+<li>Static page generation</li>
+<li>Automatic code splitting</li>
+<li>Image lazy loading</li>
+<li>CDN distribution via Vercel Edge Network</li>
+</ul>
+</li>
+</ol>
+<h3>Build Verification</h3>
+<p><strong>Local Build Testing</strong>:</p>
+<pre><code class="language-bash">npm run build    # Verify build succeeds
+npm start        # Test production build locally
+</code></pre>
+<p><strong>CI Build Validation</strong>:</p>
+<ul>
+<li>ESLint code quality checks</li>
+<li>Build success verification</li>
+<li>Test execution (if tests exist)</li>
+</ul>
+<h2>Deployment Environments</h2>
+<h3>Production Environment</h3>
+<ul>
+<li><strong>URL</strong>: <a href="https://restaurant-speisekarte.vercel.app/">https://restaurant-speisekarte.vercel.app/</a></li>
+<li><strong>Branch</strong>: <code>main</code>/<code>master</code></li>
+<li><strong>Auto-deploy</strong>: Yes (on successful CI)</li>
+<li><strong>Environment</strong>: Production optimized</li>
+</ul>
+<h3>Preview Environments</h3>
+<ul>
+<li><strong>Trigger</strong>: Pull requests</li>
+<li><strong>URL</strong>: Dynamic preview URLs</li>
+<li><strong>Purpose</strong>: Review changes before merge</li>
+<li><strong>Lifecycle</strong>: Deleted after PR merge/close</li>
+</ul>
+<h2>Performance Optimization</h2>
+<h3>Vercel Platform Features</h3>
+<ol>
+<li><strong>Global CDN</strong>: Content delivered from edge locations worldwide</li>
+<li><strong>Smart Compression</strong>: Automatic gzip/brotli compression</li>
+<li><strong>Cache Headers</strong>: Optimized caching strategies</li>
+<li><strong>SSL/TLS</strong>: Automatic HTTPS with certificate management</li>
+</ol>
+<h3>Next.js Optimizations</h3>
+<ol>
+<li><strong>Static Generation</strong>: Pages pre-rendered at build time</li>
+<li><strong>Image Optimization</strong>: Automatic WebP conversion and resizing</li>
+<li><strong>Code Splitting</strong>: Automatic bundle optimization</li>
+<li><strong>Font Optimization</strong>: Google Fonts optimization</li>
+</ol>
+<h2>Monitoring and Analytics</h2>
+<h3>Built-in Monitoring</h3>
+<ul>
+<li><strong>Vercel Analytics</strong>: Real-time performance monitoring</li>
+<li><strong>Build Logs</strong>: Detailed deployment logs</li>
+<li><strong>Error Tracking</strong>: Automatic error detection and alerts</li>
+</ul>
+<h3>Performance Metrics</h3>
+<ul>
+<li><strong>Core Web Vitals</strong>: LCP, FID, CLS tracking</li>
+<li><strong>Page Load Speed</strong>: Time to first byte (TTFB)</li>
+<li><strong>Bundle Size</strong>: JavaScript bundle analysis</li>
+</ul>
+<h2>Rollback Strategy</h2>
+<h3>Automatic Rollbacks</h3>
+<ul>
+<li><strong>Build Failures</strong>: Automatic prevention of broken deployments</li>
+<li><strong>Health Checks</strong>: Vercel monitors deployment health</li>
+</ul>
+<h3>Manual Rollbacks</h3>
+<pre><code class="language-bash"># Via Vercel CLI
+vercel rollback [deployment-url]
+
+# Via Vercel Dashboard
+# Navigate to deployments and select previous version
+</code></pre>
+<h2>Best Practices</h2>
+<h3>Deployment Best Practices</h3>
+<p>✅ <strong>Always test builds locally</strong> before pushing<br>✅ <strong>Use feature branches</strong> for development<br>✅ <strong>Review preview deployments</strong> before merging<br>✅ <strong>Monitor deployment status</strong> in Vercel dashboard<br>✅ <strong>Keep dependencies updated</strong> for security  </p>
+<h3>Security Best Practices</h3>
+<p>✅ <strong>HTTPS by default</strong> (Vercel automatic)<br>✅ <strong>Security headers</strong> configured<br>✅ <strong>No sensitive data</strong> in client-side code<br>✅ <strong>Regular dependency updates</strong> for vulnerability fixes  </p>
+<h2>Troubleshooting</h2>
+<h3>Common Deployment Issues</h3>
+<ol>
+<li><p><strong>Build Failures</strong></p>
+<pre><code class="language-bash"># Check build locally
+npm run build
+
+# Check for ESLint errors
+npm run lint
+</code></pre>
+</li>
+<li><p><strong>Image Loading Issues</strong></p>
+<ul>
+<li>Verify image paths are correct</li>
+<li>Ensure images are in <code>public/</code> directory</li>
+<li>Check Next.js Image component usage</li>
+</ul>
+</li>
+<li><p><strong>CSS Issues</strong></p>
+<ul>
+<li>Verify CSS module imports</li>
+<li>Check for naming conflicts</li>
+<li>Validate CSS syntax</li>
+</ul>
+</li>
+</ol>
+<h3>Debug Commands</h3>
+<pre><code class="language-bash"># Local development
+npm run dev
+
+# Production build testing
+npm run build &amp;&amp; npm start
+
+# Dependency check
+npm audit
+
+# Clear cache
+rm -rf .next node_modules
+npm install
+</code></pre>
+<hr>
+<p><strong>Related Documentation</strong>:</p>
+<ul>
+<li><a href="./vercel-setup.html">Vercel CI/CD Setup Guide</a></li>
+<li><a href="architecture-site/system-overview.html">System Architecture</a></li>
+<li><a href="https://vercel.com/docs">Vercel Documentation</a></li>
+</ul>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>
