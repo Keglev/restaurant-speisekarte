@@ -31,6 +31,11 @@ if (process.env.SITE_ROOT && process.env.SITE_ROOT.trim()) {
 }
 // Replace SITE_ROOT placeholder in the template so asset links become site-root absolute.
 template = template.replace(/\{\{SITE_ROOT\}\}/g, siteRootUrl);
+// siteRootPrefix will be used to build absolute links for side-nav entries.
+// When SITE_ROOT is set (CI), produce '/repo/...' style prefixes. Locally
+// leave it empty so links are generated as relative paths (no leading slash)
+// which is friendlier for local preview.
+const siteRootPrefix = siteRootUrl ? siteRootUrl.replace(/\/$/, '') + '/' : '/';
 ensureDir(path.dirname(cssDest));
 fs.copyFileSync(cssSrc, cssDest);
 // copy logo if present (so templates' logo is available under site assets)
@@ -61,10 +66,14 @@ function wrapFile(filePath) {
   const relPath = path.relative(siteRoot, filePath).replace(/\\/g, '/');
   const dir = path.dirname(relPath).replace(/\\/g, '/');
   let perFileBase = './';
-  if (dir && dir !== '.') {
-    perFileBase = (siteRootUrl ? siteRootUrl : '') + '/' + dir + '/';
+  if (siteRootUrl) {
+    // When siteRootUrl is known (CI/github-pages), use an absolute base
+    // that includes the repository prefix so links resolve correctly.
+    if (dir && dir !== '.') perFileBase = siteRootUrl.replace(/\/$/, '') + '/' + dir + '/';
+    else perFileBase = siteRootUrl.replace(/\/$/, '') + '/';
   } else {
-    perFileBase = (siteRootUrl ? siteRootUrl + '/' : './');
+    // Local preview: keep a relative base so we don't introduce a leading '/'
+    perFileBase = './';
   }
 
   // inject SIDENAV if available (the template will contain {{SIDENAV}})
@@ -119,8 +128,8 @@ function buildSideNavFor(subdir) {
       if (it.isDirectory()) {
         html += `<li class="nav-group">${it.name}${walkDir(p, base)}</li>`;
       } else if (/\.html$/i.test(it.name)) {
-        // make links site-relative (the template adds a base href for gh-pages)
-        const link = `${subdir}/${rel}`;
+  // make links site-root absolute so they work from any page regardless of its <base>
+  const link = `${siteRootPrefix}${subdir}/${rel}`.replace(/\/+/g, '/');
         // Try to extract a friendly label from the target HTML: prefer <title>, then <h1>, else filename
         let label = it.name.replace(/\.html$/i,'');
         try {
@@ -147,21 +156,26 @@ function buildSideNavFor(subdir) {
   // Insert generated SIDENAV into template
 const archInner = buildSideNavFor('architecture-site');
 const deployInner = buildSideNavFor('deployment-site');
+  // Remove redundant top-level entries that duplicate the grouped links (cleaner left-nav).
+  // Match whether or not a siteRoot prefix is present by allowing an optional
+  // leading path segment before the expected filename.
+  const cleanArchInner = archInner.replace(/<li>\s*<a[^>]*href="(?:[^"]*\/)?architecture-site\/README.html"[\s\S]*?<\/li>/i, '');
+  const finalArchInner = cleanArchInner.replace(/<li>\s*<a[^>]*href="(?:[^"]*\/)?architecture-site\/system-overview.html"[\s\S]*?<\/li>/i, '');
 // Build grouped navs: top-level "Architecture" and "Deployment" labels that contain
 // the component/patterns/workflows lists underneath. Clicking the top label goes
 // to the system overview (Architecture) or deployment README (Deployment).
 const sideNavHtml = `
   <div class="side-navs">
-    <nav class="side-nav" data-site="architecture-site">
+      <nav class="side-nav" data-site="architecture-site">
       <ul>
-        <li class="top"><a href="architecture-site/system-overview.html">Architecture</a>
-          ${archInner}
+        <li class="top"><a href="${siteRootPrefix}architecture-site/system-overview.html">Architecture</a>
+          ${finalArchInner}
         </li>
       </ul>
     </nav>
     <nav class="side-nav" data-site="deployment-site">
       <ul>
-        <li class="top"><a href="deployment-site/README.html">Deployment</a>
+        <li class="top"><a href="${siteRootPrefix}deployment-site/README.html">Deployment</a>
           ${deployInner}
         </li>
       </ul>
