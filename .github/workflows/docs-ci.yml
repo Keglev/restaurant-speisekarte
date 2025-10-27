@@ -105,6 +105,24 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "ℹ **Note:** This is a documentation-only update. No deployment was triggered." >> $GITHUB_STEP_SUMMARY
 
+    # 5 Smoke-test build + internal link-check (fast, before publish)
+    # Why: build the docs the same way CI will and run the tolerant internal checker to fail early
+    - name: Smoke build + internal link-check
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    - name: Install dependencies for smoke test
+      run: |
+        npm ci --prefer-offline --no-audit --no-fund
+    - name: Build docs (smoke)
+      run: |
+        rm -rf docs/_site || true
+        mkdir -p docs/_site
+        npm run docs:build
+    - name: Run tolerant MD->HTML checker
+      run: |
+        node ./scripts/check-md-links.js
+
   # Publish the generated documentation
   #  Why: publish the built documentation site to the gh-pages branch for hosting
   publish-docs:

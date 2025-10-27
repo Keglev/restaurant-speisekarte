@@ -115,3 +115,10 @@ if(missing.length){
   console.error('Missing samples (up to 20):');
   missing.slice(0,20).forEach(m=>console.error(JSON.stringify(m)));
 }
+
+// Exit with non-zero status if missing links were detected so CI fails fast.
+if (missing.length) {
+  process.exit(2);
+} else {
+  process.exit(0);
+}
