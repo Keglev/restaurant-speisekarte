@@ -73,6 +73,19 @@ function resolveUrl(fromFile, url) {
     }
     // remove any remaining leading slash
     if (rel.startsWith('/')) rel = rel.slice(1);
+    // If rel still begins with the repo name (with or without owner segment), strip it.
+    // This handles cases where the HTML contains '/restaurant-speisekarte/...' or
+    // 'Keglev/restaurant-speisekarte/...' that weren't fully removed above.
+    try {
+      const repoName = repoBase.replace(/^\//, '');
+      if (repoName) {
+        // remove optional owner/ prefix and the repoName if present at start
+        const re = new RegExp('^(?:[^/]+/)?' + repoName + '/?');
+        rel = rel.replace(re, '');
+      }
+    } catch (e) {
+      // ignore regex errors
+    }
     return path.join(SITE, rel);
   }
   // Try resolving relative to the file (most links are written relative to their page)
