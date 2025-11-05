@@ -1,0 +1,308 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/architecture-site/patterns/">
+  <title>Design Patterns</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content"><h1>Design Patterns</h1>
+<h2>Overview</h2>
+<p>This document outlines the key design patterns implemented in the Restaurant Speisekarte application, focusing on maintainable, scalable, and performant code architecture.</p>
+<h2>Architecture Patterns</h2>
+<h3>1. Component-Based Architecture Pattern</h3>
+<p><strong>Implementation</strong>: React functional components with hooks
+<strong>Benefits</strong>: </p>
+<ul>
+<li>Modularity and reusability</li>
+<li>Clear separation of concerns</li>
+<li>Easy testing and maintenance</li>
+</ul>
+<pre><code class="language-javascript">// Pattern Example: Functional Component with Hooks
+const Kategorien = ({ griffFilter, knopftGetippt }) =&gt; {
+  return (
+    &lt;section className={styles.section_kategorien}&gt;
+      {/* Component JSX */}
+    &lt;/section&gt;
+  );
+};
+</code></pre>
+<h3>2. Container-Presentation Pattern</h3>
+<p><strong>Container Component</strong> (<code>pages/index.js</code>):</p>
+<ul>
+<li>Manages application state</li>
+<li>Handles business logic</li>
+<li>Passes data to presentation components</li>
+</ul>
+<p><strong>Presentation Components</strong> (<code>components/*</code>):</p>
+<ul>
+<li>Focus on UI rendering</li>
+<li>Receive data via props</li>
+<li>Emit events via callbacks</li>
+</ul>
+<pre><code class="language-javascript">// Container Pattern
+export default function Home() {
+  const [gefiltertDaten, setgefiltertDaten] = useState(produkteVorspeise);
+  
+  const griffFilter = (kategorie) =&gt; {
+    setgefiltertDaten(filterProdukte(kategorie));
+  };
+
+  return (
+    &lt;main&gt;
+      &lt;Kategorien griffFilter={griffFilter} /&gt;
+      &lt;div&gt;
+        {gefiltertDaten.map((produkt) =&gt; (
+          &lt;Karten key={produkt.id} produkt={produkt} /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/main&gt;
+  );
+}
+</code></pre>
+<h2>Data Management Patterns</h2>
+<h3>3. Service Layer Pattern</h3>
+<p><strong>Location</strong>: <code>/src/service/index.js</code>
+<strong>Purpose</strong>: Centralized business logic</p>
+<pre><code class="language-javascript">// Service Layer Implementation
+export const suchtProdukt = (textGetippt) =&gt; {
+  return produkte.filter(
+    (produkte) =&gt;
+      produkte.name.toLowerCase().includes(textGetippt.toLowerCase()) ||
+      produkte.beschreibung.toLowerCase().includes(textGetippt.toLowerCase())
+  );
+};
+
+export const filterProdukte = (kategorie) =&gt; {
+  return produkte.filter((produkte) =&gt; produkte.kategorie === kategorie);
+};
+</code></pre>
+<p><strong>Benefits</strong>:</p>
+<ul>
+<li>Business logic separation</li>
+<li>Reusable utility functions</li>
+<li>Easy testing and mocking</li>
+</ul>
+<h3>4. Static Data Pattern</h3>
+<p><strong>Implementation</strong>: Centralized data management
+<strong>Location</strong>: <code>/src/data/daten.produkte.js</code></p>
+<pre><code class="language-javascript">// Static Data Pattern
+export const produkte = [
+  {
+    id: 1,
+    name: &quot;Spaghetti&quot;,
+    kategorie: &quot;Pasta&quot;,
+    preis: 12.0,
+    beschreibung: &quot;Delicious pasta...&quot;,
+    bild: spaghetti,
+  },
+  // ... more products
+];
+</code></pre>
+<h2>UI Patterns</h2>
+<h3>5. CSS Modules Pattern</h3>
+<p><strong>Implementation</strong>: Component-scoped styling
+<strong>Benefits</strong>: Style encapsulation and conflict prevention</p>
+<pre><code class="language-javascript">// CSS Modules Pattern
+import styles from &quot;./karten.module.css&quot;;
+
+const Karten = ({ produkt }) =&gt; {
+  return (
+    &lt;div className={styles.container}&gt;
+      &lt;div className={styles.container_info}&gt;
+        {/* Component content */}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+</code></pre>
+<h3>6. Conditional Styling Pattern</h3>
+<p><strong>Implementation</strong>: Dynamic CSS class application based on state</p>
+<pre><code class="language-javascript">// Conditional Styling Pattern
+&lt;button className={knopftGetippt === &quot;Pasta&quot; ? styles.anlichtKnpf : styles.auslichtKnpf}
+  onClick={() =&gt; griffFilter(&quot;Pasta&quot;)}&gt;
+  Pasta
+&lt;/button&gt;
+</code></pre>
+<h2>State Management Patterns</h2>
+<h3>7. Lifting State Up Pattern</h3>
+<p><strong>Implementation</strong>: State managed in parent component
+<strong>Data Flow</strong>: Top-down via props, events bubble up</p>
+<pre><code class="language-javascript">// State Lifting Pattern
+const Home = () =&gt; {
+  // State managed at top level
+  const [gefiltertDaten, setgefiltertDaten] = useState(produkteVorspeise);
+  const [textSuchtGetippt, setTextSuchtGetippt] = useState(&quot;&quot;);
+  const [knopftGetippt, setKnopfGetippt] = useState(&quot;Vorspeise&quot;);
+
+  // Event handlers passed down
+  const griffSucht = (textGetippt) =&gt; {
+    setTextSuchtGetippt(textGetippt);
+    // State updates trigger re-renders
+  };
+
+  return (
+    &lt;div&gt;
+      &lt;SuchtLeiste textSuchtGetippt={textSuchtGetippt} griffSucht={griffSucht} /&gt;
+      &lt;Kategorien knopftGetippt={knopftGetippt} griffFilter={griffFilter} /&gt;
+    &lt;/div&gt;
+  );
+};
+</code></pre>
+<h3>8. Event Handling Pattern</h3>
+<p><strong>Implementation</strong>: Centralized event handling with callback props</p>
+<pre><code class="language-javascript">// Event Handling Pattern
+const griffFilter = (kategorie) =&gt; {
+  setTextSuchtGetippt(&quot;&quot;);           // Clear search
+  setgefiltertDaten(filterProdukte(kategorie)); // Update data
+  setKnopfGetippt(kategorie);        // Update active state
+};
+
+const griffSucht = (textGetippt) =&gt; {
+  setTextSuchtGetippt(textGetippt);
+  textGetippt.length &gt;= 3 &amp;&amp; setgefiltertDaten(suchtProdukt(textGetippt));
+  setKnopfGetippt(&quot;&quot;);               // Clear category selection
+};
+</code></pre>
+<h2>Performance Patterns</h2>
+<h3>9. Image Optimization Pattern</h3>
+<p><strong>Implementation</strong>: Next.js Image component with static imports</p>
+<pre><code class="language-javascript">// Image Optimization Pattern
+import Image from &#39;next/image&#39;
+import spaghetti from &quot;../../public/assets/img/espaguete.jpg&quot;;
+
+const Karten = ({ produkt }) =&gt; {
+  return (
+    &lt;figure&gt;
+      &lt;Image src={produkt.bild} alt={produkt.name} /&gt;
+    &lt;/figure&gt;
+  );
+};
+</code></pre>
+<h3>10. Memoization Pattern (Potential Enhancement)</h3>
+<p><strong>Future Implementation</strong>: React.memo for stable components</p>
+<pre><code class="language-javascript">// Memoization Pattern (Recommended Enhancement)
+import React from &#39;react&#39;;
+
+const Karten = React.memo(({ produkt }) =&gt; {
+  return (
+    &lt;div className={styles.container}&gt;
+      {/* Component content */}
+    &lt;/div&gt;
+  );
+});
+</code></pre>
+<h2>Error Handling Patterns</h2>
+<h3>11. Defensive Programming Pattern</h3>
+<p><strong>Implementation</strong>: Safe property access and fallbacks</p>
+<pre><code class="language-javascript">// Defensive Programming Pattern
+const formatPrice = (preis) =&gt; {
+  try {
+    return new Intl.NumberFormat(&quot;de-DE&quot;, {
+      style: &quot;currency&quot;, 
+      currency: &quot;EUR&quot;
+    }).format(preis || 0);
+  } catch (error) {
+    return `€${preis || 0}`;
+  }
+};
+</code></pre>
+<h2>Development Patterns</h2>
+<h3>12. File Organization Pattern</h3>
+<p><strong>Structure</strong>: Feature-based organization</p>
+<pre><code>src/
+├── components/          # UI Components
+│   ├── karten/         # Menu Card Component
+│   │   ├── index.jsx
+│   │   └── karten.module.css
+│   ├── kategorien/     # Category Filter Component
+│   └── suchtleiste/    # Search Component
+├── data/               # Static Data
+├── pages/              # Next.js Pages
+├── service/            # Business Logic
+└── styles/             # Global Styles
+</code></pre>
+<h2>Testing Patterns (Recommended)</h2>
+<h3>13. Component Testing Pattern</h3>
+<pre><code class="language-javascript">// Component Testing Pattern (Future Implementation)
+import { render, screen, fireEvent } from &#39;@testing-library/react&#39;;
+import Kategorien from &#39;./index&#39;;
+
+test(&#39;should filter products when category is clicked&#39;, () =&gt; {
+  const mockGriffFilter = jest.fn();
+  
+  render(&lt;Kategorien griffFilter={mockGriffFilter} knopftGetippt=&quot;&quot; /&gt;);
+  
+  fireEvent.click(screen.getByText(&#39;Pasta&#39;));
+  
+  expect(mockGriffFilter).toHaveBeenCalledWith(&#39;Pasta&#39;);
+});
+</code></pre>
+<h2>Anti-Patterns Avoided</h2>
+<h3>❌ Props Drilling (Minimized)</h3>
+<ul>
+<li>Current depth is manageable (max 2 levels)</li>
+<li>For larger applications, consider Context API</li>
+</ul>
+<h3>❌ Inline Styling</h3>
+<ul>
+<li>All styling uses CSS modules</li>
+<li>No style objects in components</li>
+</ul>
+<h3>❌ Magic Numbers/Strings</h3>
+<ul>
+<li>Constants defined for search minimum length</li>
+<li>Category names consistently used</li>
+</ul>
+<hr>
+<p>-<strong>Related Documentation</strong>:</p>
+<ul>
+<li><a href="../components/README.html">Component Architecture</a></li>
+<li><a href="../system-overview.html">System Overview</a></li>
+<li><a href="./state-management.html">State Management</a></li>
+</ul>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>

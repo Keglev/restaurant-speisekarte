@@ -1,0 +1,124 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/reference/">
+  <title>JSDoc: Source: service/index.js</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content">
+
+<div id="main">
+
+    <h1 class="page-title">Source: service/index.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { produkte } from "../data/daten.produkte.js";
+
+/**
+ * Search the product catalog for a given text.
+ *
+ * @param {string} textGetippt - Text entered by the user to search for.
+ * @returns {Array&lt;Object>} Array of matching product objects (may be empty).
+ *
+ * @example
+ * const results = suchtProdukt('Pasta');
+ */
+export const suchtProdukt = (textGetippt) => {
+  return produkte.filter(
+    (produkte) =>
+      produkte.name.toLowerCase().includes(textGetippt.toLowerCase()) ||
+      produkte.beschreibung.toLowerCase().includes(textGetippt.toLowerCase())
+  );
+};
+
+/**
+ * Filter the product list by a category name.
+ *
+ * @param {string} kategorie - Category name (e.g. "Vorspeise", "Pasta").
+ * @returns {Array&lt;Object>} Array of products that belong to the given category.
+ *
+ * @example
+ * const pastaItems = filterProdukte('Pasta');
+ */
+export const filterProdukte = (kategorie) => {
+  return produkte.filter((produkte) => produkte.kategorie === kategorie);
+};
+
+
+/**
+ * Pre-filtered products for the default category 'Vorspeise'.
+ * @type {Array&lt;Object>}
+ */
+export const produkteVorspeise = filterProdukte("Vorspeise");</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#filterProdukte">filterProdukte</a></li><li><a href="global.html#produkte">produkte</a></li><li><a href="global.html#produkteVorspeise">produkteVorspeise</a></li><li><a href="global.html#suchtProdukt">suchtProdukt</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Nov 05 2025 21:27:53 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/deployment-site/">
+  <title>Vercel CI/CD Pipeline Setup</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content"><h1>Vercel CI/CD Pipeline Setup</h1>
+<p>This repository includes a GitHub Actions workflow that automatically builds and deploys the application to Vercel when changes are pushed to the main branch.</p>
+<h2>Setup Instructions</h2>
+<ol>
+<li><p><strong>Get Vercel Credentials:</strong></p>
+<ul>
+<li>Install Vercel CLI: <code>npm i -g vercel</code></li>
+<li>Run <code>vercel</code> in your project directory and follow the setup</li>
+<li>Run <code>vercel --token</code> to get your token</li>
+<li>Get your organization and project IDs from Vercel dashboard</li>
+</ul>
+</li>
+<li><p><strong>Add GitHub Secrets:</strong>
+Go to your GitHub repository → Settings → Secrets and variables → Actions</p>
+<p>Add these secrets:</p>
+<ul>
+<li><code>VERCEL_TOKEN</code>: Your Vercel token</li>
+<li><code>VERCEL_ORG_ID</code>: Your Vercel organization ID  </li>
+<li><code>VERCEL_PROJECT_ID</code>: Your Vercel project ID</li>
+</ul>
+</li>
+<li><p><strong>Pipeline Workflow:</strong></p>
+<ul>
+<li><p><strong>Test Stage</strong>: Runs on all pushes and PRs</p>
+<ul>
+<li>Installs dependencies</li>
+<li>Runs linting</li>
+<li>Builds the application</li>
+<li>Runs tests (if available)</li>
+</ul>
+</li>
+<li><p><strong>Deploy Stage</strong>: Only runs on pushes to main branch</p>
+<ul>
+<li>Builds the application</li>
+<li>Deploys to Vercel production</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2>Alternative Setup (Simpler)</h2>
+<p>If you prefer to keep Vercel&#39;s automatic deployment (which you currently have), you can use this simplified workflow that just runs tests:</p>
+<pre><code class="language-yaml">name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: &#39;18&#39;
+        cache: &#39;npm&#39;
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run build
+</code></pre>
+<p>This way you get the benefits of CI (automated testing) while keeping Vercel&#39;s simple auto-deployment.</p>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>

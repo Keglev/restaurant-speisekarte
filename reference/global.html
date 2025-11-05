@@ -1,0 +1,682 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/reference/">
+  <title>JSDoc: Global</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content">
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="filterProdukte"><span class="type-signature">(constant) </span>filterProdukte<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Filter the product list by a category name.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="service_index.js.html">service/index.js</a>, <a href="service_index.js.html#line29">line 29</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const pastaItems = filterProdukte('Pasta');</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="produkte"><span class="type-signature">(constant) </span>produkte<span class="type-signature"> :Array.&lt;<a href="global.html#Produkt">Produkt</a>></span></h4>
+
+
+
+
+<div class="description">
+    <p>Product catalog for the menu application.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;<a href="global.html#Produkt">Produkt</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_daten.produkte.js.html">data/daten.produkte.js</a>, <a href="data_daten.produkte.js.html#line46">line 46</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="produkteVorspeise"><span class="type-signature">(constant) </span>produkteVorspeise<span class="type-signature"> :Array.&lt;Object></span></h4>
+
+
+
+
+<div class="description">
+    <p>Pre-filtered products for the default category 'Vorspeise'.</p>
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;Object></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="service_index.js.html">service/index.js</a>, <a href="service_index.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="suchtProdukt"><span class="type-signature">(constant) </span>suchtProdukt<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    <p>Search the product catalog for a given text.</p>
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="service_index.js.html">service/index.js</a>, <a href="service_index.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>const results = suchtProdukt('Pasta');</code></pre>
+
+
+
+        
+    
+
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+<h4 class="name" id="Produkt">Produkt</h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>kategorie</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>preis</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>beschreibung</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>bild</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">any</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>imported image module (Next.js Image compatible)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="data_daten.produkte.js.html">data/daten.produkte.js</a>, <a href="data_daten.produkte.js.html#line32">line 32</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#filterProdukte">filterProdukte</a></li><li><a href="global.html#produkte">produkte</a></li><li><a href="global.html#produkteVorspeise">produkteVorspeise</a></li><li><a href="global.html#suchtProdukt">suchtProdukt</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Wed Nov 05 2025 21:27:53 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>

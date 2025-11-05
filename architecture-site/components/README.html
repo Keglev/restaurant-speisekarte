@@ -1,0 +1,234 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/architecture-site/components/">
+  <title>Component Architecture</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content"><h1>Component Architecture</h1>
+<h2>Overview</h2>
+<p>The Restaurant Speisekarte application is built using a component-based architecture with three main interactive components, each responsible for specific functionality within the menu system.</p>
+<h2>Component Hierarchy</h2>
+<pre><code>App (index.js)
+├── Header (Banner)
+├── Kategorien (Category Filter)
+├── SuchtLeiste (Search Bar)
+└── Section (Menu Display)
+    └── Karten[] (Menu Cards)
+</code></pre>
+<h2>Core Components</h2>
+<h3>1. Kategorien Component</h3>
+<p><strong>Location</strong>: <code>/src/components/kategorien/</code>
+<strong>Purpose</strong>: Category filtering interface</p>
+<pre><code class="language-javascript">&lt;Kategorien 
+  griffFilter={griffFilter} 
+  knopftGetippt={knopftGetippt} 
+/&gt;
+</code></pre>
+<p><strong>Responsibilities</strong>:</p>
+<ul>
+<li>Display category filter buttons</li>
+<li>Handle category selection events</li>
+<li>Provide visual feedback for active category</li>
+<li>Pass filter selections to parent component</li>
+</ul>
+<p><strong>Categories Supported</strong>:</p>
+<ul>
+<li>Vorspeise (Appetizers)</li>
+<li>Pasta</li>
+<li>Fleisch (Meat)</li>
+<li>Getränken (Drinks)</li>
+<li>Salat (Salads)</li>
+<li>Naschspeisen (Desserts)</li>
+</ul>
+<h3>2. SuchtLeiste Component</h3>
+<p><strong>Location</strong>: <code>/src/components/suchtleiste/</code>
+<strong>Purpose</strong>: Real-time search functionality</p>
+<pre><code class="language-javascript">&lt;SuchtLeiste 
+  textSuchtGetippt={textSuchtGetippt}
+  griffSucht={griffSucht} 
+/&gt;
+</code></pre>
+<p><strong>Responsibilities</strong>:</p>
+<ul>
+<li>Provide search input interface</li>
+<li>Handle real-time text input</li>
+<li>Trigger search functionality</li>
+<li>Clear search when needed</li>
+</ul>
+<h3>3. Karten Component</h3>
+<p><strong>Location</strong>: <code>/src/components/karten/</code>
+<strong>Purpose</strong>: Individual menu item display</p>
+<pre><code class="language-javascript">&lt;Karten 
+  produkt={produkt} 
+/&gt;
+</code></pre>
+<p><strong>Responsibilities</strong>:</p>
+<ul>
+<li>Display menu item information</li>
+<li>Render optimized product images</li>
+<li>Format pricing in EUR currency</li>
+<li>Show item descriptions</li>
+</ul>
+<h2>Component Communication Patterns</h2>
+<h3>Parent-Child Communication</h3>
+<pre><code>Index.js (Parent)
+    ↓ (props)
+Components (Children)
+    ↑ (callbacks)
+Index.js (Parent)
+</code></pre>
+<h3>Data Flow Example</h3>
+<ol>
+<li><strong>User Action</strong>: Clicks &quot;Getränken&quot; category button</li>
+<li><strong>Event Handling</strong>: <code>griffFilter(&quot;Getränken&quot;)</code> called</li>
+<li><strong>State Update</strong>: <code>setgefiltertDaten(filterProdukte(&quot;Getränken&quot;))</code></li>
+<li><strong>Re-render</strong>: Components update with filtered data</li>
+</ol>
+<h3>State Management Pattern</h3>
+<pre><code class="language-javascript">// Parent component state
+const [gefiltertDaten, setgefiltertDaten] = useState(produkteVorspeise);
+const [textSuchtGetippt, setTextSuchtGetippt] = useState(&quot;&quot;);
+const [knopftGetippt, setKnopfGetippt] = useState(&quot;Vorspeise&quot;);
+
+// Event handlers
+const griffSucht = (textGetippt) =&gt; {
+  setTextSuchtGetippt(textGetippt);
+  textGetippt.length &gt;= 3 &amp;&amp; setgefiltertDaten(suchtProdukt(textGetippt));
+  setKnopfGetippt(&quot;&quot;);
+};
+
+const griffFilter = (kategorie) =&gt; {
+  setTextSuchtGetippt(&quot;&quot;);
+  setgefiltertDaten(filterProdukte(kategorie));
+  setKnopfGetippt(kategorie);
+};
+</code></pre>
+<h2>Component Styling Architecture</h2>
+<h3>CSS Modules Pattern</h3>
+<p>Each component has its own CSS module file:</p>
+<ul>
+<li><code>karten.module.css</code></li>
+<li><code>kategorien.module.css</code></li>
+<li><code>suchtleiste.module.css</code></li>
+</ul>
+<h3>Style Isolation</h3>
+<pre><code class="language-javascript">import styles from &quot;./karten.module.css&quot;;
+
+&lt;div className={styles.container}&gt;
+  &lt;figure&gt;
+    &lt;Image src={produkt.bild} alt={produkt.name} /&gt;
+  &lt;/figure&gt;
+  &lt;div className={styles.container_info}&gt;
+    // Component content
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h2>Component Props Interface</h2>
+<h3>Kategorien Props</h3>
+<pre><code class="language-typescript">interface KategorienProps {
+  griffFilter: (kategorie: string) =&gt; void;
+  knopftGetippt: string;
+}
+</code></pre>
+<h3>SuchtLeiste Props</h3>
+<pre><code class="language-typescript">interface SuchtLeisteProps {
+  textSuchtGetippt: string;
+  griffSucht: (text: string) =&gt; void;
+}
+</code></pre>
+<h3>Karten Props</h3>
+<pre><code class="language-typescript">interface KartenProps {
+  produkt: {
+    id: number;
+    name: string;
+    kategorie: string;
+    preis: number;
+    beschreibung: string;
+    bild: StaticImageData;
+  };
+}
+</code></pre>
+<h2>Performance Considerations</h2>
+<h3>Image Optimization</h3>
+<ul>
+<li><strong>Next.js Image Component</strong>: Automatic optimization and lazy loading</li>
+<li><strong>Static Imports</strong>: Images imported as modules for optimization</li>
+<li><strong>Responsive Images</strong>: Automatic sizing based on device</li>
+</ul>
+<h3>Component Rendering</h3>
+<ul>
+<li><strong>Conditional Rendering</strong>: Only render filtered items</li>
+<li><strong>Key Props</strong>: Proper key props for list rendering</li>
+<li><strong>Memo Optimization</strong>: Potential for React.memo on stable components</li>
+</ul>
+<h2>Component Testing Strategy</h2>
+<h3>Unit Testing Approach</h3>
+<ul>
+<li><strong>Component Isolation</strong>: Test each component independently</li>
+<li><strong>Props Testing</strong>: Verify component behavior with different props</li>
+<li><strong>Event Testing</strong>: Test user interactions and callbacks</li>
+<li><strong>Snapshot Testing</strong>: Ensure UI consistency</li>
+</ul>
+<h3>Integration Testing</h3>
+<ul>
+<li><strong>Component Interaction</strong>: Test component communication</li>
+<li><strong>Data Flow</strong>: Verify data flows correctly through props</li>
+<li><strong>State Updates</strong>: Test state changes and re-renders</li>
+</ul>
+<hr>
+<p>-<strong>Related Documentation</strong>:
+<strong>Related Documentation</strong>:</p>
+<ul>
+<li><a href="./karten-component.html">Karten Component</a></li>
+<li><a href="./kategorien-component.html">Kategorien Component</a></li>
+<li><a href="./suchtleiste-component.html">Suchtleiste Component</a></li>
+<li><a href="../patterns/">Design Patterns</a></li>
+<li><a href="../system-overview.html">System Overview</a></li>
+</ul>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>

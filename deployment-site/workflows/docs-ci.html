@@ -1,0 +1,114 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/deployment-site/workflows/">
+  <title>Documentation CI (GitHub Actions)</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content"><h1>Documentation CI (GitHub Actions)</h1>
+<p>This document explains the <code>docs-ci.yml</code> workflow located at <code>.github/workflows/docs-ci.yml</code>.</p>
+<h2>Purpose</h2>
+<ul>
+<li>Validate documentation changes (Markdown link-checking and structure validation)</li>
+<li>Prevent docs-only changes from triggering production deployments</li>
+</ul>
+<h2>Triggers</h2>
+<ul>
+<li>Pushes and pull requests to <code>main</code>/<code>master</code> that modify <code>docs/**</code>, <code>README.md</code>, or any <code>*.md</code> file</li>
+</ul>
+<h2>Jobs</h2>
+<ul>
+<li><code>validate-docs</code>: runs on <code>ubuntu-latest</code> and performs:<ul>
+<li>Checkout code</li>
+<li>Validate Markdown links using <code>gaurav-nelson/github-action-markdown-link-check@v1</code></li>
+<li>Run a shell script to ensure <code>docs/README.md</code> and <code>README.md</code> exist</li>
+<li>Populate <code>$GITHUB_STEP_SUMMARY</code> with changed markdown files for quick review</li>
+</ul>
+</li>
+</ul>
+<h2>Workflow (excerpt)</h2>
+<pre><code class="language-yaml">name: Documentation CI
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - &#39;docs/**&#39;
+      - &#39;README.md&#39;
+      - &#39;*.md&#39;
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - &#39;docs/**&#39;
+      - &#39;README.md&#39;
+      - &#39;*.md&#39;
+
+jobs:
+  validate-docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Validate Markdown files
+      uses: gaurav-nelson/github-action-markdown-link-check@v1
+      with:
+        use-quiet-mode: &#39;yes&#39;
+        use-verbose-mode: &#39;yes&#39;
+        config-file: &#39;.github/workflows/markdown-link-check-config.json&#39;
+    - name: Check documentation structure
+      run: |
+        # checks for files
+    - name: Generate documentation summary
+      run: |
+        # add changed md files to $GITHUB_STEP_SUMMARY
+</code></pre>
+<h2>Notes</h2>
+<ul>
+<li>The markdown link check action can be noisy for external links; adjust <code>markdown-link-check-config.json</code> as needed.</li>
+<li>This workflow intentionally does not perform any build or deployment steps.</li>
+</ul>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>

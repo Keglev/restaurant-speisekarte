@@ -1,0 +1,159 @@
+<!-- enterprise-template -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base href="/restaurant-speisekarte/architecture-site/">
+  <title>System Architecture Overview</title>
+  <link rel="stylesheet" href="/restaurant-speisekarte/assets/enterprise.css">
+</head>
+<body>
+  <header class="enterprise-header">
+    <div class="container">
+      <div class="brand">
+        <h1>Restaurant Speisekarte</h1>
+        <p class="tagline">Docs & Code reference</p>
+      </div>
+      <nav class="top-nav">
+        <a href="/restaurant-speisekarte/index.html">Home</a>
+        <a href="/restaurant-speisekarte/reference/index.html">Reference</a>
+        <a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+        <a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container enterprise-main">
+    <aside class="enterprise-aside">
+  <div class="side-navs">
+      <nav class="side-nav" data-site="architecture-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/architecture-site/system-overview.html">Architecture</a>
+          <ul><li class="nav-group">components<ul><li><a href="/restaurant-speisekarte/architecture-site/components/karten-component.html">Karten Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/kategorien-component.html">Kategorien Component</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/README.html">Component Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/components/suchtleiste-component.html">SuchtLeiste Component</a></li></ul></li><li class="nav-group">patterns<ul><li><a href="/restaurant-speisekarte/architecture-site/patterns/component-communication.html">Component Communication</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/data-flow.html">Data Flow Architecture</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/index.html">Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/README.html">Design Patterns</a></li><li><a href="/restaurant-speisekarte/architecture-site/patterns/state-management.html">State Management Patterns</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+    <nav class="side-nav" data-site="deployment-site">
+      <ul>
+        <li class="top"><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment</a>
+          <ul><li><a href="/restaurant-speisekarte/deployment-site/README.html">Deployment Documentation</a></li><li><a href="/restaurant-speisekarte/deployment-site/vercel-setup.html">Vercel CI/CD Pipeline Setup</a></li><li class="nav-group">workflows<ul><li><a href="/restaurant-speisekarte/deployment-site/workflows/ci.html">CI - Code Quality (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/deploy.html">Deploy to Vercel (GitHub Actions)</a></li><li><a href="/restaurant-speisekarte/deployment-site/workflows/docs-ci.html">Documentation CI (GitHub Actions)</a></li></ul></li></ul>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</aside>
+    <section class="enterprise-content"><h1>System Architecture Overview</h1>
+<h2>High-Level Architecture</h2>
+<p>The Restaurant Speisekarte application follows a component-based architecture using Next.js and React, designed for simplicity, maintainability, and performance.</p>
+<h2>Architecture Diagram</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    Browser (Client)                         │
+├─────────────────────────────────────────────────────────────┤
+│                 Next.js Frontend                            │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │   Pages     │  │ Components  │  │   Styles    │        │
+│  │ (index.js)  │  │   Layer     │  │ (CSS Modules)│       │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+│         │               │                  │               │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
+│  │   Service   │  │    Data     │  │   Assets    │        │
+│  │   Layer     │  │   Layer     │  │  (Images)   │        │
+│  └─────────────┘  └─────────────┘  └─────────────┘        │
+├─────────────────────────────────────────────────────────────┤
+│                 Vercel Platform                             │
+│              (Static Hosting + CDN)                        │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2>System Components</h2>
+<h3>1. Presentation Layer</h3>
+<ul>
+<li><strong>Pages</strong>: Next.js page components (<code>/src/pages/</code>)</li>
+<li><strong>Components</strong>: Reusable UI components (<code>/src/components/</code>)</li>
+<li><strong>Styles</strong>: CSS Modules for component styling (<code>/src/styles/</code>)</li>
+</ul>
+<h3>2. Business Logic Layer</h3>
+<ul>
+<li><strong>Service Layer</strong>: Business logic and data processing (<code>/src/service/</code>)</li>
+<li><strong>Data Layer</strong>: Static data management (<code>/src/data/</code>)</li>
+</ul>
+<h3>3. Asset Layer</h3>
+<ul>
+<li><strong>Images</strong>: Optimized product images (<code>/public/assets/</code>)</li>
+<li><strong>Static Assets</strong>: Icons, banners, and other resources</li>
+</ul>
+<h2>Key Design Principles</h2>
+<h3>1. Component-Based Architecture</h3>
+<ul>
+<li><strong>Modularity</strong>: Each component has a single responsibility</li>
+<li><strong>Reusability</strong>: Components can be composed and reused</li>
+<li><strong>Encapsulation</strong>: CSS Modules provide style isolation</li>
+</ul>
+<h3>2. Data Flow Architecture</h3>
+<pre><code>Data Source → Service Layer → Components → UI
+     ↓             ↓            ↓        ↓
+  Static Data → Filter/Search → Props → Render
+</code></pre>
+<h3>3. State Management</h3>
+<ul>
+<li><strong>Local State</strong>: React hooks (<code>useState</code>) for component state</li>
+<li><strong>Props Drilling</strong>: Parent-to-child data flow</li>
+<li><strong>Event Handling</strong>: User interactions bubble up to parent components</li>
+</ul>
+<h2>Technology Stack Integration</h2>
+<h3>Frontend Framework</h3>
+<ul>
+<li><strong>Next.js 14</strong>: React framework with SSG/SSR capabilities</li>
+<li><strong>React 18</strong>: Component library with modern hooks</li>
+<li><strong>CSS Modules</strong>: Scoped styling solution</li>
+</ul>
+<h3>Performance Optimizations</h3>
+<ul>
+<li><strong>Next.js Image</strong>: Automatic image optimization</li>
+<li><strong>Static Generation</strong>: Pre-rendered pages for fast loading</li>
+<li><strong>Code Splitting</strong>: Automatic bundle optimization</li>
+</ul>
+<h3>Development Tools</h3>
+<ul>
+<li><strong>ESLint</strong>: Code quality and consistency</li>
+<li><strong>npm</strong>: Package management</li>
+<li><strong>Git</strong>: Version control</li>
+</ul>
+<h2>Scalability Considerations</h2>
+<h3>Current Architecture Benefits</h3>
+<ul>
+<li>✅ Fast initial page load (static generation)</li>
+<li>✅ Optimized images and assets</li>
+<li>✅ Clean component separation</li>
+<li>✅ Easy to maintain and extend</li>
+</ul>
+<h3>Future Enhancement Opportunities</h3>
+<ul>
+<li>🔄 Add API integration for dynamic data</li>
+<li>🔄 Implement global state management (Context API/Redux)</li>
+<li>🔄 Add unit and integration testing</li>
+<li>🔄 Implement internationalization (i18n)</li>
+</ul>
+<h2>Security Considerations</h2>
+<h3>Current Implementation</h3>
+<ul>
+<li>✅ No sensitive data exposure (static content)</li>
+<li>✅ HTTPS by default (Vercel)</li>
+<li>✅ No authentication required (public menu)</li>
+</ul>
+<h3>Production Security</h3>
+<ul>
+<li>CSP headers via Vercel</li>
+<li>Automatic security updates</li>
+<li>No backend vulnerabilities (static site)</li>
+</ul>
+<hr>
+<p><strong>Next</strong>: <a href="./components/README.html">Component Architecture</a> | <a href="./patterns/README.html">Design Patterns</a></p>
+</section>
+  </main>
+
+  <footer class="enterprise-footer">
+    <div class="container">© Keglev — Generated documentation</div>
+  </footer>
+</body>
+</html>
