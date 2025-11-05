@@ -109,13 +109,6 @@ This application follows modern Next.js architecture patterns with clear separat
 - [🎯 Design Patterns](https://keglev.github.io/restaurant-speisekarte/architecture-site/patterns/README.html) — Implementation patterns and best practices
 - [🚀 Deployment Strategy](https://keglev.github.io/restaurant-speisekarte/deployment-site/README.html) — CI/CD and deployment documentation
 
-Key Architecture Documents:
-
-- [Component Architecture](./docs/architecture/components/README.md) — Component design and interaction patterns
-- [State Management Patterns](./docs/architecture/patterns/state-management.md) — Application state handling strategies
-- [Data Flow Architecture](./docs/architecture/patterns/data-flow.md) — Data flow from source to UI components
-
-The project documentation is published here: https://Keglev.github.io/restaurant-speisekarte/
 
 The docs landing page: https://Keglev.github.io/restaurant-speisekarte/
 
@@ -187,20 +180,3 @@ npm run lint       # Run ESLint
 📬 For questions or contributions, feel free to [open an issue](https://github.com/Keglev/restaurant-speisekarte/issues).
 
 ---
-
-
-<!-- docs-ci-trigger: 2025-10-22T18:28:46.0784081+02:00 -->
-
-<!-- docs-ci-trigger: 2025-10-24T12:29:55.9946853+02:00 -->
-
-<!-- docs trigger: 2025-10-24T14:00:14.0712044+02:00 -->
-
-<!-- docs trigger: 2025-10-24T14:01:42.4716170+02:00 -->
-
-<!-- docs trigger: 2025-10-24T14:13:52.3489761+02:00 -->
-
-<!-- docs trigger: 2025-10-24T14:14:19.3747293+02:00 -->
-
-<!-- docs trigger: 2025-10-24T14:17:40.2560827+02:00 | 0e074003 -->
-
-<!-- docs trigger: 2025-10-24T14:17:50.8859113+02:00 | fb51a1e8 -->
